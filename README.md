@@ -5,3 +5,4 @@
 RESOURCES:
 --------------
 - http://www.tutorialspoint.com/android/android_login_screen.htm
+- http://developer.android.com/training/basics/firstapp/starting-activity.html
