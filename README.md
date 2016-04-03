@@ -1,8 +1,7 @@
-CMSC491/628 Project                                                                                         
-
-Developers:   Randy Brunecz,                         
-Last Updated: 4/3/2016
-==============                            
+#CMSC491/628 Project                                                                                         
+#Developers:   Randy Brunecz,                         
+#Last Updated: 4/3/2016
+                            
 
 
 
