@@ -4,25 +4,54 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-
-    private EditText eT;//USED FOR DEBUGGING
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    /* PRIVATE VARIABLES */
+    private String userName;
+    private Button postBtn, searchBtn;
+    private Animation fade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* DEBUG */
-        eT = (EditText)findViewById(R.id.editText);
-
+        /* Get the username from the previous activity */
         Intent intent = getIntent();
-        String message = intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
-        eT.setText(message);
-        eT.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        eT.setEnabled(false);
-        /* END DEBUG CODE */
+        String userName = intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
+
+        /* Set up properties of the action bar */
+        getSupportActionBar().setTitle(userName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        fade = AnimationUtils.loadAnimation(this, R.anim.fade);
+
+         /* Set up the buttons */
+        postBtn = (Button)findViewById(R.id.postSpotBtn);
+        searchBtn = (Button)findViewById(R.id.findSpotBtn);
+
+        postBtn.setOnClickListener(this);
+        searchBtn.setOnClickListener(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //DO NOTHING
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.postSpotBtn:
+                postBtn.startAnimation(fade);
+                break;
+
+            case R.id.findSpotBtn:
+                searchBtn.startAnimation(fade);
+                break;
+        }
     }
 }
