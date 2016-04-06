@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.randy.to_be_determined.MainActivity"
-    android:background="#000000">
+    android:background="#ffc313">
 
     <Button
         android:layout_width="300dp"
@@ -16,7 +16,7 @@
         android:text="Find Study Spot"
         android:id="@+id/findSpotBtn"
         android:layout_marginTop="120dp"
-        android:background="#ffc313"
+        android:background="@drawable/rounded_button_black"
         android:textSize="32dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -27,7 +27,7 @@
         android:text="Post Study Spot"
         android:id="@+id/postSpotBtn"
         android:layout_marginTop="52dp"
-        android:background="#ffc313"
+        android:background="@drawable/rounded_button_black"
         android:textSize="32dp"
         android:layout_below="@+id/findSpotBtn"
         android:layout_alignEnd="@+id/findSpotBtn" />
