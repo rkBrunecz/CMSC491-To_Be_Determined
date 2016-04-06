@@ -10,19 +10,19 @@
         android:layout_height="50dp"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/emailText"
+        android:id="@+id/usernameText"
         android:hint="Enter username..."
         android:fontFamily="@string/abc_search_hint"
         android:editable="true"
         android:background="@drawable/round_edit_text"
         android:textSize="28dp"
-        android:layout_marginTop="154dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="91dp"
         android:textCursorDrawable="@null"
         android:textColor="#000000"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:paddingRight="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="280dp"
@@ -35,13 +35,13 @@
         android:editable="true"
         android:background="@drawable/round_edit_text"
         android:textSize="28dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/emailText"
-        android:layout_alignStart="@+id/emailText"
+        android:layout_marginTop="44dp"
         android:textCursorDrawable="@null"
         android:textColor="#000000"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:paddingRight="5dp"
+        android:layout_below="@+id/usernameText"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="150dp"
@@ -50,10 +50,70 @@
         android:id="@+id/loginButton"
         android:background="@drawable/rounded_button_green"
         android:textColor="#ffffff"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="20dp"
         android:textSize="24dp"
         android:layout_below="@+id/passwordText"
         android:layout_centerHorizontal="true"
         android:clickable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don&apos;t have an account? Sign up!"
+        android:id="@+id/signUp"
+        android:layout_below="@+id/loginButton"
+        android:layout_marginTop="45dp"
+        android:textColor="@drawable/text_color"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textIsSelectable="false"
+        android:linksClickable="false"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:id="@+id/usernamePlain"
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textSize="28dp"
+        android:textIsSelectable="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:layout_below="@+id/usernameText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:id="@+id/passwordPlain"
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textSize="28dp"
+        android:textIsSelectable="true"
+        android:layout_below="@+id/usernameText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot password?"
+        android:id="@+id/forgotPassword"
+        android:textColor="@drawable/text_color"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textIsSelectable="false"
+        android:layout_below="@+id/loginButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:linksClickable="false"
+        android:singleLine="false"
+        android:clickable="true"
+        android:focusable="false" />
 
 </RelativeLayout>
