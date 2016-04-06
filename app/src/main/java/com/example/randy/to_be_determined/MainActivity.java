@@ -3,16 +3,14 @@ package com.example.randy.to_be_determined;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE VARIABLES */
     private String userName;
     private Button postBtn, searchBtn;
-    private Animation fade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String userName = intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
 
         /* Set up properties of the action bar */
-        getSupportActionBar().setTitle(userName);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>" + userName + "</font>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        fade = AnimationUtils.loadAnimation(this, R.anim.fade);
 
          /* Set up the buttons */
         postBtn = (Button)findViewById(R.id.postSpotBtn);
@@ -46,11 +42,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.postSpotBtn:
-                postBtn.startAnimation(fade);
+
                 break;
 
             case R.id.findSpotBtn:
-                searchBtn.startAnimation(fade);
+
                 break;
         }
     }

@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,14 +23,13 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private EditText passwordText, userNameText;
     private Button loginBtn;
     private int numAttempts = 3; //Lock a user out from logging in if this reaches zero
-    private Animation fade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        fade = AnimationUtils.loadAnimation(this, R.anim.fade);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>To Be Determined</font>"));
 
         /* Get ids */
         passwordText = (EditText)findViewById(R.id.passwordText);
@@ -46,8 +44,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.loginButton:
-                loginBtn.startAnimation(fade);
-
                 if (passwordText.getText().length() > 0 && userNameText.getText().length() > 0)
                 {
                     mainIntent.putExtra(EXTRA_MESSAGE, userNameText.getText().toString());
