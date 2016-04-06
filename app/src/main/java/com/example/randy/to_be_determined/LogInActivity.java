@@ -1,6 +1,7 @@
 package com.example.randy.to_be_determined;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -22,6 +24,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private Intent mainIntent;
     private EditText passwordText, userNameText;
     private Button loginBtn;
+    private TextView forgotPassword, signUp;
     private int numAttempts = 3; //Lock a user out from logging in if this reaches zero
 
     @Override
@@ -33,11 +36,16 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         /* Get ids */
         passwordText = (EditText)findViewById(R.id.passwordText);
-        userNameText = (EditText)findViewById(R.id.emailText);
+        userNameText = (EditText)findViewById(R.id.usernameText);
         loginBtn = (Button)findViewById(R.id.loginButton);
+        forgotPassword = (TextView)findViewById(R.id.forgotPassword);
+        signUp = (TextView)findViewById(R.id.signUp);
+
         mainIntent = new Intent(this, MainActivity.class); //Create an intent to launch the main activity upon successfully logging in
 
         loginBtn.setOnClickListener(this);
+        forgotPassword.setOnClickListener(this);
+        signUp.setOnClickListener(this);
     }
 
     @Override
@@ -79,6 +87,13 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
 
+            case R.id.forgotPassword:
+
+                break;
+
+            case R.id.signUp:
+
+                break;
         }
     }
 }
