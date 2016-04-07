@@ -1,7 +1,6 @@
 package com.example.randy.to_be_determined;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +31,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>To Be Determined</font>"));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>Log In</font>"));
 
         /* Get ids */
         passwordText = (EditText)findViewById(R.id.passwordText);
@@ -43,6 +42,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         mainIntent = new Intent(this, MainActivity.class); //Create an intent to launch the main activity upon successfully logging in
 
+        /* Set up on click listeners */
         loginBtn.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
         signUp.setOnClickListener(this);
@@ -52,7 +52,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.loginButton:
-                if (passwordText.getText().length() > 0 && userNameText.getText().length() > 0)
+                if (passwordText.getText().length() >= 5 && userNameText.getText().length() > 0)
                 {
                     mainIntent.putExtra(EXTRA_MESSAGE, userNameText.getText().toString());
                     startActivity(mainIntent);
@@ -92,7 +92,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.signUp:
-
+                Intent createAccountIntent = new Intent(this, CreateAccountActivity.class); //Create an intent to launch the create account activity
+                startActivity(createAccountIntent);
                 break;
         }
     }
