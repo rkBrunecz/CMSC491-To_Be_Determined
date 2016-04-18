@@ -1,6 +1,7 @@
 #CMSC491/628 Project                                                                                         
-*Developers:   Randy Brunecz,*                        
-*Last Updated: 4/6/2016*
+*Developers:   Rajuta Parlance, Venkat Rami Reddy, Jessica Rolfe, Randy Brunecz,*           
+*UI Designers: Nick Desaulniers, Sandy Nguyen*             
+*Last Updated: 4/15/2016*
                             
 RESOURCES:
 --------------
