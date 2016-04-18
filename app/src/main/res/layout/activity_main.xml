@@ -13,7 +13,7 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="80dp"
-        android:text="Find Study Spot"
+        android:text="SEARCH"
         android:id="@+id/findSpotBtn"
         android:layout_marginTop="120dp"
         android:background="@drawable/rounded_button_black"
@@ -24,7 +24,7 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="80dp"
-        android:text="Post Study Spot"
+        android:text="Post"
         android:id="@+id/postSpotBtn"
         android:layout_marginTop="52dp"
         android:background="@drawable/rounded_button_black"

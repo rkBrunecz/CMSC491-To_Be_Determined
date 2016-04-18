@@ -82,55 +82,55 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter valid UMBC email address"
+        android:text="ENTER VALID UMBC EMAIL ADDRESS"
         android:id="@+id/enterEmailTxt"
         android:textColor="#000000"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textIsSelectable="false"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/enterEmailEdit"
-        android:layout_marginTop="32dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter your password"
+        android:text="ENTER YOUR PASSWORD (CASE SENSITIVE)"
         android:id="@+id/enterPassTxt"
         android:textColor="#000000"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textIsSelectable="false"
         android:layout_below="@+id/enterUserEdit"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="4dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter a username"
+        android:text="ENTER YOUR USERNAME"
         android:id="@+id/enterUsernameTxt"
         android:textColor="#000000"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textIsSelectable="false"
         android:layout_below="@+id/enterEmailEdit"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="4dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm your password (case sensitive)"
+        android:text="CONFIRM YOUR PASSWORD"
         android:id="@+id/confirmPassTxt"
         android:textColor="#000000"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textIsSelectable="false"
         android:layout_below="@+id/enterPassEdit"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="4dp" />
 
     <Button
         android:layout_width="150dp"
