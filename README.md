@@ -1,11 +1,10 @@
+<p align="center">
+  <img src="https://github.com/rkBrunecz/CMSC491-To_Be_Determined/blob/master/app/src/main/res/mipmap-xxxhdpi/spot_swap_launcher.png" alt="SpotSwap Logo" height=192 width=192/>
+</p>
 #CMSC491/628 Project ~ SpotSwap                                                                                        
 *Developers:   Rajuta Parlance, Venkat Rami Reddy, Jessica Rolfe, Randy Brunecz,*           
 *UI Designers: Nick Desaulniers, Sandy Nguyen*             
 *Last Updated: 4/15/2016*
-
-<p align="center">
-  <img src="https://github.com/rkBrunecz/CMSC491-To_Be_Determined/blob/master/app/src/main/res/mipmap-xxxhdpi/spot_swap_launcher.png" alt="SpotSwap Logo" height=192 width=192/>
-</p>
                             
 RESOURCES:
 --------------
