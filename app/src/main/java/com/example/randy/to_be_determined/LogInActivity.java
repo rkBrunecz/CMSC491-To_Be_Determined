@@ -2,6 +2,7 @@ package com.example.randy.to_be_determined;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -46,6 +47,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         loginBtn.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
         signUp.setOnClickListener(this);
+
+        /* Underline the sign up and forgot password text */
+        signUp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        forgotPassword.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
     @Override
