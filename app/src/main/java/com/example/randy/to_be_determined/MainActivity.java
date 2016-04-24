@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.postSpotBtn:
-
+                Intent postIntent = new Intent(this, PostActivity.class); //Create an intent to launch the create account activity
+                startActivity(postIntent);
                 break;
 
             case R.id.findSpotBtn:
