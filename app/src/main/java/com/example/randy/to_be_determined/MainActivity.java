@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE VARIABLES */
@@ -28,6 +29,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          /* Set up the buttons */
         postBtn = (Button)findViewById(R.id.postSpotBtn);
         searchBtn = (Button)findViewById(R.id.findSpotBtn);
+
+        /* Set up custom font */
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", (TextView)findViewById(R.id.spotSwapMain), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", postBtn, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", searchBtn, getAssets());
 
         postBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);

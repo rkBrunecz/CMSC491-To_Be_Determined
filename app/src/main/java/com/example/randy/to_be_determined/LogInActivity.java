@@ -3,6 +3,7 @@ package com.example.randy.to_be_determined;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -32,7 +33,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>Log In</font>"));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>LOG IN</font>"));
 
         /* Get ids */
         passwordText = (EditText)findViewById(R.id.passwordText);
@@ -42,6 +43,16 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         signUp = (TextView)findViewById(R.id.signUp);
 
         mainIntent = new Intent(this, MainActivity.class); //Create an intent to launch the main activity upon successfully logging in
+
+        /* Set up custom font */
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", (TextView) findViewById(R.id.spotSwapLogIn), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.usernamePlain), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.passwordPlain), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", forgotPassword, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", signUp, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", loginBtn, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", userNameText, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", passwordText, getAssets());
 
         /* Set up on click listeners */
         loginBtn.setOnClickListener(this);

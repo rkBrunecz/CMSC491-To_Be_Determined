@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -50,6 +51,18 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         flrarr = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, flr);
 
+        /* Set up custom font */
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", (TextView) findViewById(R.id.textView6), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.textView), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.textView2), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.textView3), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.textView5), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", charger, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", window, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", description, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", photoButton, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", post, getAssets());
+
         locarr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         flrarr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -61,8 +74,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-             photo = (Bitmap) data.getExtras().get("data");
+            photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
+            photoButton.setVisibility(View.INVISIBLE);
+            photoButton.setClickable(false);
         }
     }
 
