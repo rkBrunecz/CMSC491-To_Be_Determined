@@ -11,18 +11,18 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/usernameText"
-        android:hint="Enter username..."
+        android:hint="ENTER USERNAME..."
         android:fontFamily="@string/abc_search_hint"
         android:editable="true"
         android:background="@drawable/round_edit_text"
         android:textSize="28dp"
-        android:layout_marginTop="91dp"
         android:textCursorDrawable="@null"
         android:textColor="#000000"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/passwordPlain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
 
     <EditText
         android:layout_width="280dp"
@@ -30,47 +30,47 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/passwordText"
-        android:hint="Enter password..."
+        android:hint="ENTER PASSWORD..."
         android:fontFamily="@string/abc_search_hint"
         android:editable="true"
         android:background="@drawable/round_edit_text"
         android:textSize="28dp"
-        android:layout_marginTop="44dp"
         android:textCursorDrawable="@null"
         android:textColor="#000000"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:layout_below="@+id/usernameText"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/loginButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="165dp"
+        android:layout_height="75dp"
         android:text="Log In"
         android:id="@+id/loginButton"
         android:background="@drawable/rounded_button_green"
         android:textColor="#ffffff"
-        android:layout_marginTop="20dp"
-        android:textSize="24dp"
-        android:layout_below="@+id/passwordText"
+        android:textSize="32dp"
+        android:clickable="false"
+        android:layout_above="@+id/forgotPassword"
         android:layout_centerHorizontal="true"
-        android:clickable="false" />
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don&apos;t have an account? Sign up!"
+        android:text="DON&apos;T HAVE AN ACCOUNT? SIGN UP!"
         android:id="@+id/signUp"
-        android:layout_below="@+id/loginButton"
-        android:layout_marginTop="45dp"
         android:textColor="@drawable/text_color"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:textAlignment="center"
-        android:textSize="24dp"
+        android:textSize="20dp"
         android:textIsSelectable="false"
         android:linksClickable="false"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="italic" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,10 +81,9 @@
         android:textAlignment="center"
         android:textSize="28dp"
         android:textIsSelectable="true"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/usernameText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp"
-        android:layout_below="@+id/usernameText" />
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -95,25 +94,37 @@
         android:textAlignment="center"
         android:textSize="28dp"
         android:textIsSelectable="true"
-        android:layout_below="@+id/usernameText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_above="@+id/passwordText"
+        android:layout_alignEnd="@+id/usernamePlain"
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forgot password?"
+        android:text="FORGOT PASSWORD?"
         android:id="@+id/forgotPassword"
         android:textColor="@drawable/text_color"
         android:textAlignment="center"
-        android:textSize="24dp"
+        android:textSize="20dp"
         android:textIsSelectable="false"
-        android:layout_below="@+id/loginButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         android:linksClickable="false"
         android:singleLine="false"
         android:clickable="true"
-        android:focusable="false" />
+        android:focusable="false"
+        android:layout_above="@+id/signUp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SPOTSWAP"
+        android:id="@+id/spotSwapLogIn"
+        android:layout_above="@+id/usernamePlain"
+        android:layout_centerHorizontal="true"
+        android:textSize="64dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#000000" />
 
 </RelativeLayout>
