@@ -4,9 +4,9 @@
 </p>                                                                                   
 *Developers:   Rajuta Parlance, Venkat Rami Reddy, Jessica Rolfe, Randy Brunecz*           
 *UI Designers: Nick Desaulniers, Sandy Nguyen*             
-*Last Updated: 4/15/2016*
+*Last Updated: 4/23/2016*
  
-
+This app allows users to find study spots  and reserve them on campus. Users can post study spots and then sell them to other users who reserve the space. 
                            
 RESOURCES:
 --------------
