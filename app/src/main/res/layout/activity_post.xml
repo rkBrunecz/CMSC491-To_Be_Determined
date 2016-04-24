@@ -31,7 +31,7 @@
             android:layout_marginLeft="20dp" />
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:id="@+id/spinner"
             android:background="@drawable/rounded_spinner"
@@ -40,18 +40,23 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="170dp"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:id="@+id/spinner2"
             android:background="@drawable/rounded_spinner"
+            android:textColor="#000000"
             android:popupBackground="#FFFFFFFF"
             android:layout_below="@+id/textView2"
             android:layout_alignStart="@+id/spinner"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
