@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">To_Be_Determined</string>
     <string name="title_activity_list_of_spots">ListOfSpots</string>
+    <string name="title_activity_search_with_map">Map</string>
 </resources>
