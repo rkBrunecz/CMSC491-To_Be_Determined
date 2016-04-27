@@ -52,16 +52,16 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 android.R.layout.simple_spinner_item, flr);
 
         /* Set up custom font */
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", (TextView) findViewById(R.id.textView6), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.textView), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.textView2), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.textView3), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.textView5), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", charger, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", window, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", description, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", photoButton, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", post, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", (TextView) findViewById(R.id.textView6), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.textView), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.textView2), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.textView3), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.textView5), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", charger, getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", window, getAssets());
+        CustomFont.setCustomFont("VitaStd-Light.ttf", description, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", photoButton, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", post, getAssets());
 
         locarr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         flrarr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

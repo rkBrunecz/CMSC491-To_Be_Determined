@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchBtn = (Button)findViewById(R.id.findSpotBtn);
 
         /* Set up custom font */
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", (TextView)findViewById(R.id.spotSwapMain), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", postBtn, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", searchBtn, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", (TextView)findViewById(R.id.spotSwapMain), getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", postBtn, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", searchBtn, getAssets());
 
         postBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.findSpotBtn:
-
+                Intent searchIntent = new Intent(this, SearchWithMapActivity.class);
+                startActivity(searchIntent);
                 break;
         }
     }

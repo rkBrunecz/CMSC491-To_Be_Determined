@@ -34,17 +34,17 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         cancelBtn = (Button)findViewById(R.id.cancelBtn);
 
         /* Set up custom font */
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", (TextView) findViewById(R.id.spotSwapCreateAccount), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.enterEmailTxt), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.enterUsernameTxt), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.enterPassTxt), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.confirmPassTxt), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", cancelBtn, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", createAccountBtn, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", emailEdit, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", userNameEdit, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", passwordEdit, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", confirmPasswordEdit, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", (TextView) findViewById(R.id.spotSwapCreateAccount), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterEmailTxt), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterUsernameTxt), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterPassTxt), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.confirmPassTxt), getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", cancelBtn, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", createAccountBtn, getAssets());
+        CustomFont.setCustomFont("VitaStd-Light.ttf", emailEdit, getAssets());
+        CustomFont.setCustomFont("VitaStd-Light.ttf", userNameEdit, getAssets());
+        CustomFont.setCustomFont("VitaStd-Light.ttf", passwordEdit, getAssets());
+        CustomFont.setCustomFont("VitaStd-Light.ttf", confirmPasswordEdit, getAssets());
 
         /* Set up on click listeners */
         cancelBtn.setOnClickListener(this);

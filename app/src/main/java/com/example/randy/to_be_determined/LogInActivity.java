@@ -45,14 +45,14 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         mainIntent = new Intent(this, MainActivity.class); //Create an intent to launch the main activity upon successfully logging in
 
         /* Set up custom font */
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", (TextView) findViewById(R.id.spotSwapLogIn), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.usernamePlain), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.otf", (TextView) findViewById(R.id.passwordPlain), getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", forgotPassword, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", signUp, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Bold.otf", loginBtn, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", userNameText, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Light.otf", passwordText, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", (TextView) findViewById(R.id.spotSwapLogIn), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.usernamePlain), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.passwordPlain), getAssets());
+        CustomFont.setCustomFont("VitaStd-LightItalic.ttf", forgotPassword, getAssets());
+        CustomFont.setCustomFont("VitaStd-LightItalic.ttf", signUp, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", loginBtn, getAssets());
+        CustomFont.setCustomFont("VitaStd-Light.ttf", userNameText, getAssets());
+        CustomFont.setCustomFont("VitaStd-Light.ttf", passwordText, getAssets());
 
         /* Set up on click listeners */
         loginBtn.setOnClickListener(this);
