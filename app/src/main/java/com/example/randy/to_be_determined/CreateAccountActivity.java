@@ -1,5 +1,8 @@
 package com.example.randy.to_be_determined;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +20,8 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     /* PRIVATE VARIABLES */
     private EditText passwordEdit, userNameEdit, confirmPasswordEdit, emailEdit;
     private Button createAccountBtn, cancelBtn;
+    private DatabaseHelper dbhelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,9 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         /* Set up on click listeners */
         cancelBtn.setOnClickListener(this);
         createAccountBtn.setOnClickListener(this);
+
+        dbhelper = new DatabaseHelper(getApplicationContext());
+        db = dbhelper.getWritableDatabase();
     }
 
     @Override
@@ -65,8 +73,20 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
                         Toast.makeText(getApplicationContext(), "Must have a valid UMBC email address!", Toast.LENGTH_SHORT).show();
 
                     emailEdit.setHintTextColor(Color.RED);
-
                     emailEdit.setText(""); //Clear email text
+
+                    validAccount = false;
+                }
+                if(passwordEdit.getText().length() < 5) //Minimum length of a password will be five characters currently
+                {
+                    Toast.makeText(getApplicationContext(), "No password was entered or password was too short (minimum of 5 characters)!", Toast.LENGTH_LONG).show();
+
+                    passwordEdit.setHintTextColor(Color.RED);
+                    confirmPasswordEdit.setHintTextColor(Color.RED);
+
+                    /* Clear password text boxes */
+                    passwordEdit.setText("");
+                    confirmPasswordEdit.setText("");
 
                     validAccount = false;
                 }
@@ -91,25 +111,29 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
                     validAccount = false;
                 }
-                if(passwordEdit.getText().length() < 5) //Minimum length of a password will be five characters currently
-                {
-                    Toast.makeText(getApplicationContext(), "No password was entered or password was too short!", Toast.LENGTH_SHORT).show();
-
-                    passwordEdit.setHintTextColor(Color.RED);
-                    confirmPasswordEdit.setHintTextColor(Color.RED);
-
-                    /* Clear password text boxes */
-                    passwordEdit.setText("");
-                    confirmPasswordEdit.setText("");
-
-                    validAccount = false;
-                }
 
                 /* Create an account! */
-                if(validAccount)
-                {
-                    Toast.makeText(getApplicationContext(), "Account created!", Toast.LENGTH_SHORT).show();
-                    finish(); //Destroy activity
+                if(validAccount) {
+                    long returnVal = createUser(userNameEdit.getText().toString(), passwordEdit.getText().toString(), emailEdit.getText().toString());
+                    if (returnVal >= 0) {
+                        Toast.makeText(getApplicationContext(), "Account created!", Toast.LENGTH_SHORT).show();
+                        finish(); //Destroy activity
+                    } else if (returnVal == -1)
+                        Toast.makeText(getApplicationContext(), "Account creation failed! Please try again later.", Toast.LENGTH_LONG).show();
+                    else if (returnVal == -2)
+                    {
+                        Toast.makeText(getApplicationContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
+                        userNameEdit.setHintTextColor(Color.RED);
+                        userNameEdit.setText(""); //Clear email text
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Provided email is associated with another account already!", Toast.LENGTH_LONG).show();
+                        emailEdit.setHintTextColor(Color.RED);
+                        emailEdit.setText(""); //Clear email text
+                    }
+
+                    validAccount = false;
                 }
 
                 break;
@@ -119,5 +143,39 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
                 break;
         }
+    }
+
+    public long createUser(String userName, String password, String email)
+    {
+        Cursor c = fetchUsername(userName);
+
+        if(c.getCount() > 0)
+            return -2;
+
+        c = fetchEmail(email);
+        if(c.getCount() > 0)
+            return -3;
+
+        ContentValues values = createContentValues(userName, password, email);
+        return db.insert("users", null,values);
+    }
+
+    private ContentValues createContentValues(String userName, String password, String email)
+    {
+        ContentValues values = new ContentValues();
+        values.put("username", userName);
+        values.put("password", password);
+        values.put("email", email);
+        return values;
+    }
+
+    public Cursor fetchUsername(String name)
+    {
+        return db.query("users", new String[]{"username"}, "username=?", new String[]{name}, null, null, null);
+    }
+
+    public Cursor fetchEmail(String email)
+    {
+        return db.query("users", new String[]{"email"}, "email=?", new String[]{email}, null, null, null);
     }
 }

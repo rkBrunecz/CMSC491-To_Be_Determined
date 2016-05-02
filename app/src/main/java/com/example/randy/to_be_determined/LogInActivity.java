@@ -1,9 +1,10 @@
 package com.example.randy.to_be_determined;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -26,7 +27,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private EditText passwordText, userNameText;
     private Button loginBtn;
     private TextView forgotPassword, signUp;
-    private int numAttempts = 3; //Lock a user out from logging in if this reaches zero
+    private int numAttempts = 5; //Lock a user out from logging in if this reaches zero
+    private DatabaseHelper dbhelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,34 +65,31 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         /* Underline the sign up and forgot password text */
         signUp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        dbhelper = new DatabaseHelper(getApplicationContext());
+        db = dbhelper.getReadableDatabase();
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.loginButton:
-                if (passwordText.getText().length() >= 5 && userNameText.getText().length() > 0)
-                {
-                    mainIntent.putExtra(EXTRA_MESSAGE, userNameText.getText().toString());
-                    startActivity(mainIntent);
-                    finish(); //Destroy activity
-                }
-                else if(userNameText.getText().length() == 0 || passwordText.getText().length() == 0)
+                if(userNameText.getText().length() == 0 || passwordText.getText().length() < 5)
                 {
                     if(userNameText.getText().length() == 0)
                     {
                         userNameText.setHintTextColor(Color.RED);
                         Toast.makeText(userNameText.getContext(), "No username was entered!", Toast.LENGTH_SHORT).show();
                     }
-                    if (passwordText.getText().length() == 0)
+                    if (passwordText.getText().length() < 5)
                     {
                         passwordText.setHintTextColor(Color.RED);
-                        Toast.makeText(passwordText.getContext(), "No password was entered!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(passwordText.getContext(), "No password was entered or password was too short (minimum of 5 characters)!", Toast.LENGTH_LONG).show();
                     }
-                }
-                else
+                } //Check to see if the username and password match an account in the database (or if the user is an Admin).
+                else if(fetchUser(userNameText.getText().toString(), passwordText.getText().toString()).getCount() == 0)
                 {
-                    Toast.makeText(getApplicationContext(), "Either the password or username entered is incorrect!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Either the username or password entered is incorrect!", Toast.LENGTH_LONG).show();
                     numAttempts--;
 
                     //Lock the user out from logging in if number of attempts reaches zero
@@ -99,6 +99,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         loginBtn.setBackgroundColor(Color.GRAY);
                         Toast.makeText(getApplicationContext(), "Too many attempts, please try again later.", Toast.LENGTH_LONG).show();
                     }
+                }
+                else
+                {
+                    mainIntent.putExtra(EXTRA_MESSAGE, userNameText.getText().toString());
+                    startActivity(mainIntent);
+                    finish(); //Destroy activity
                 }
 
                 break;
@@ -112,5 +118,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(createAccountIntent);
                 break;
         }
+    }
+
+    public Cursor fetchUser(String name, String password)
+    {
+        return db.query("users", new String[]{"username, password"}, "username=? and password=?", new String[]{name, password}, null, null, null);
     }
 }
