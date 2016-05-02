@@ -73,11 +73,20 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK)
+        {
             photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
+            imageView.setRotation(90);
+            imageView.setOnClickListener(this);
+            imageView.setClickable(true);
+
             photoButton.setVisibility(View.INVISIBLE);
-            photoButton.setClickable(false);
+        }
+        else if(requestCode == CAMERA_REQUEST && resultCode == RESULT_CANCELED)
+        {
+            imageView.setVisibility(View.INVISIBLE);
+            photoButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -85,9 +94,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
 
             case R.id.button :
+            {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
                 break;
+            }
 
             case R.id.button2 :
                 String chrgr=null,wndw=null;
@@ -122,6 +134,14 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 //Toast.makeText(getApplicationContext(), disp,
                 //Toast.LENGTH_LONG).show();
                 break;
+
+            case R.id.imageView :
+            {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+                break;
+            }
 
             /*case R.id.btplus:
                 Toast.makeText(getApplicationContext(), "Plus is clicked" + "+", Toast.LENGTH_SHORT).show();
