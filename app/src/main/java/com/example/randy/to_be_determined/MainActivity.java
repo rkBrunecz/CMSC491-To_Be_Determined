@@ -4,16 +4,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE VARIABLES */
-    private Button postBtn, searchBtn;
+    private Button postBtn, searchBtn, logOutBtn;
+    private TextView userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +25,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          /* Set up the buttons */
         postBtn = (Button)findViewById(R.id.postSpotBtn);
         searchBtn = (Button)findViewById(R.id.findSpotBtn);
+        logOutBtn = (Button)findViewById(R.id.logOutButton);
+        userName = (TextView)findViewById(R.id.userNameMain);
 
         /* Set up custom font */
         CustomFont.setCustomFont("VitaCondensedStd-Bold.ttf", (TextView)findViewById(R.id.spotSwapMain), getAssets());
         CustomFont.setCustomFont("VitaStd-Bold.ttf", postBtn, getAssets());
         CustomFont.setCustomFont("VitaStd-Bold.ttf", searchBtn, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", logOutBtn, getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", userName, getAssets());
+
+        userName.setText(((SpotSwap)getApplication()).getUserName());
 
         postBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater toolbarMenu = getMenuInflater();
-        toolbarMenu.inflate(R.menu.menu, menu);
-        return true;
+        logOutBtn.setOnClickListener(this);
+        userName.setOnClickListener(this);
     }
 
     @Override
@@ -61,6 +59,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.findSpotBtn:
                 Intent searchIntent = new Intent(this, SearchWithMapActivity.class);
                 startActivity(searchIntent);
+                break;
+
+            case R.id.logOutButton:
+                break;
+
+            case R.id.userNameMain:
                 break;
         }
     }
