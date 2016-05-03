@@ -98,8 +98,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 else //Username and password are a match.
                 {
                     ((SpotSwap)getApplication()).setUserName(userNameText.getText().toString());
-                    startActivity(mainIntent);
                     finish(); //Destroy activity
+                    startActivity(mainIntent);
                 }
 
                 break;
