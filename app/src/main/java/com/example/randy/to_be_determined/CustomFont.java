@@ -3,6 +3,7 @@ package com.example.randy.to_be_determined;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.CheckBox;
 
