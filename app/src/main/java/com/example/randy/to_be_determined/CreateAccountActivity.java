@@ -39,7 +39,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         cancelBtn = (Button)findViewById(R.id.cancelBtn);
 
         /* Set up custom font */
-        CustomFont.setCustomFont("VitaStd-Bold.ttf", (TextView) findViewById(R.id.spotSwapCreateAccount), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.ttf", (TextView) findViewById(R.id.spotSwapCreateAccount), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterEmailTxt), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterUsernameTxt), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterPassTxt), getAssets());
@@ -155,6 +155,8 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         c = fetchEmail(email);
         if(c.getCount() > 0)
             return -3;
+
+        c.close();
 
         ContentValues values = createContentValues(userName, password, email);
         return db.insert("users", null,values);

@@ -19,9 +19,6 @@ import android.widget.Toast;
  */
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener{
 
-    /* PUBLIC VARIABLES */
-    public final static String EXTRA_MESSAGE = "com.example.randy.MESSAGE";
-
     /* PRIVATE VARIABLES */
     private Intent mainIntent;
     private EditText passwordText, userNameText;
@@ -36,8 +33,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>LOG IN</font>"));
-
         /* Get ids */
         passwordText = (EditText)findViewById(R.id.passwordText);
         userNameText = (EditText)findViewById(R.id.usernameText);
@@ -48,7 +43,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         mainIntent = new Intent(this, MainActivity.class); //Create an intent to launch the main activity upon successfully logging in
 
         /* Set up custom font */
-        CustomFont.setCustomFont("VitaStd-Bold.ttf", (TextView) findViewById(R.id.spotSwapLogIn), getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Bold.ttf", (TextView) findViewById(R.id.spotSwapLogIn), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.usernamePlain), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.passwordPlain), getAssets());
         CustomFont.setCustomFont("VitaStd-LightItalic.ttf", forgotPassword, getAssets());
@@ -86,8 +81,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         passwordText.setHintTextColor(Color.RED);
                         Toast.makeText(passwordText.getContext(), "No password was entered or password was too short (minimum of 5 characters)!", Toast.LENGTH_LONG).show();
                     }
-                } //Check to see if the username and password match an account in the database (or if the user is an Admin).
-                else if(fetchUser(userNameText.getText().toString(), passwordText.getText().toString()).getCount() == 0)
+                } //Check to see if the username and password do not match an account in the database.
+                else if(fetchUser(userNameText.getText().toString(), passwordText.getText().toString()) == 0)
                 {
                     Toast.makeText(getApplicationContext(), "Either the username or password entered is incorrect!", Toast.LENGTH_LONG).show();
                     numAttempts--;
@@ -100,9 +95,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         Toast.makeText(getApplicationContext(), "Too many attempts, please try again later.", Toast.LENGTH_LONG).show();
                     }
                 }
-                else
+                else //Username and password are a match.
                 {
-                    mainIntent.putExtra(EXTRA_MESSAGE, userNameText.getText().toString());
+                    ((SpotSwap)getApplication()).setUserName(userNameText.getText().toString());
                     startActivity(mainIntent);
                     finish(); //Destroy activity
                 }
@@ -114,14 +109,23 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.signUp:
+                /* Clear out the password and username fields */
+                passwordText.setText("");
+                userNameText.setText("");
+
                 Intent createAccountIntent = new Intent(this, CreateAccountActivity.class); //Create an intent to launch the create account activity
                 startActivity(createAccountIntent);
                 break;
         }
     }
 
-    public Cursor fetchUser(String name, String password)
+    public int fetchUser(String name, String password)
     {
-        return db.query("users", new String[]{"username, password"}, "username=? and password=?", new String[]{name, password}, null, null, null);
+        Cursor c = db.query("users", new String[]{"username, password"}, "username=? and password=?", new String[]{name, password}, null, null, null);
+        int count = c.getCount();
+
+        c.close();
+
+        return count;
     }
 }
