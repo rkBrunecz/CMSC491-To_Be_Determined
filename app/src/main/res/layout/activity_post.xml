@@ -14,7 +14,7 @@
         <Button
             android:layout_width="124dp"
             android:layout_height="124dp"
-            android:text="Camera"
+            android:text="Add Image"
             android:id="@+id/button"
             android:background="@drawable/rounded_button_black"
             android:textSize="20dp"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:text="DESCRIPTION"
             android:id="@+id/textView3"
-            android:layout_below="@+id/spinner2"
+            android:layout_below="@+id/spinner3"
             android:layout_alignParentStart="true"
             android:textColor="@color/abc_input_method_navigation_guard"
             android:textSize="24dp"
@@ -108,12 +108,13 @@
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="20dp"
+            android:textColor="#000000" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CHARGING POINT"
+            android:text="WINDOW SEAT"
             android:id="@+id/checkBox"
             android:checked="false"
             android:textSize="@dimen/abc_dialog_padding_top_material"
@@ -124,7 +125,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WINDOW SEAT"
+            android:text="POWER OUTLET"
             android:id="@+id/checkBox2"
             android:checked="false"
             android:textSize="@dimen/abc_dialog_padding_top_material"
@@ -167,5 +168,73 @@
             android:textColor="#000000"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SCANNER"
+            android:id="@+id/checkBox3"
+            android:checked="false"
+            android:textSize="@dimen/abc_dialog_padding_top_material"
+            android:layout_below="@+id/checkBox2"
+            android:layout_alignStart="@+id/checkBox2"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WHITEBOARD"
+            android:id="@+id/checkBox4"
+            android:checked="false"
+            android:textSize="@dimen/abc_dialog_padding_top_material"
+            android:layout_below="@+id/checkBox3"
+            android:layout_alignStart="@+id/checkBox3"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MAC COMPUTERS"
+            android:id="@+id/checkBox5"
+            android:checked="false"
+            android:textSize="@dimen/abc_dialog_padding_top_material"
+            android:layout_below="@+id/checkBox4"
+            android:layout_alignStart="@+id/checkBox4"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ROCKING CHAIR"
+            android:id="@+id/checkBox6"
+            android:checked="false"
+            android:textSize="@dimen/abc_dialog_padding_top_material"
+            android:layout_below="@+id/checkBox5"
+            android:layout_alignStart="@+id/checkBox5"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="# OF SEATS AVAILABLE"
+            android:id="@+id/textView7"
+            android:textSize="24dp"
+            android:textColor="#000000"
+            android:layout_below="@+id/spinner2"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:id="@+id/spinner3"
+            android:background="@drawable/rounded_spinner"
+            android:layout_below="@+id/textView7"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="#000000"
+            android:popupBackground="#ffffff"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
+
     </RelativeLayout>
 </ScrollView>
