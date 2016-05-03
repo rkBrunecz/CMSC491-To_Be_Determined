@@ -13,6 +13,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/spot_swap_launcher"
         android:label="SpotSwap"
+        android:name="SpotSwap"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LogInActivity">
@@ -23,20 +24,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateAccountActivity" />
-        <activity android:name=".MainActivity">
-            android:parentActivityName="com.example.randy.to_be_determined.LogInActivity"
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.randy.to_be_determined.LogInActivity" />
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".ListOfSpots"
             android:label="@string/title_activity_list_of_spots"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PostActivity" />
-        <activity
-            android:name=".DisplayActivity"
-            android:label="Display" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
