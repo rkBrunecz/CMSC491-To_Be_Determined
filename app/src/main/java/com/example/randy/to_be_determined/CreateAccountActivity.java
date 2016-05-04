@@ -27,9 +27,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>CREATE ACCOUNT</font>"));
-
+        
         /* Get ids */
         passwordEdit = (EditText)findViewById(R.id.enterPassEdit);
         userNameEdit = (EditText)findViewById(R.id.enterUserEdit);
