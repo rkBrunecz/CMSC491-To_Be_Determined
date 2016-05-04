@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.randy.to_be_determined">
+    package="com.example.randy.to_be_determined" >
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
+         location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".SpotSwap"
         android:allowBackup="true"
         android:icon="@mipmap/spot_swap_launcher"
         android:label="SpotSwap"
-        android:name="SpotSwap"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".LogInActivity">
+        android:theme="@style/AppTheme" >
+        <activity android:name=".LogInActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +36,7 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -44,7 +44,7 @@
 
         <activity
             android:name=".SearchWithMapActivity"
-            android:label="@string/title_activity_search_with_map">
+            android:label="@string/title_activity_search_with_map" >
         </activity>
     </application>
 
