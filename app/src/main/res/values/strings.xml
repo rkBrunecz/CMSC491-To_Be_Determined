@@ -2,4 +2,8 @@
     <string name="app_name">To_Be_Determined</string>
     <string name="title_activity_list_of_spots">ListOfSpots</string>
     <string name="title_activity_search_with_map">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_action_bar">ActionBarActivity</string>
 </resources>

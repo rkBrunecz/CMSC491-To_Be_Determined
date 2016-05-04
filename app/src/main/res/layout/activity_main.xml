@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.randy.to_be_determined.MainActivity"
+    tools:context=".MainActivity"
     android:background="#ffc313">
 
     <android.support.v7.widget.Toolbar
@@ -74,5 +74,4 @@
         android:layout_below="@+id/toolbarMain"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp" />
-
 </RelativeLayout>
