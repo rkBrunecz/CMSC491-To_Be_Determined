@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.logOutButton:
+                Intent loginActivity = new Intent(this, LogInActivity.class);
+                ((SpotSwap)getApplication()).setUserName("");
+                finish();
+                startActivity(loginActivity);
                 break;
 
             case R.id.userNameMain:
