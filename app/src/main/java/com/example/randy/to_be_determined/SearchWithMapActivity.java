@@ -37,7 +37,7 @@ import java.net.URL;
 public class SearchWithMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     /* PRIVATE CONSTANTS */
-    private final int DELAY = 10000;
+    private final int DELAY = 2500;
 
     /* PRIVATE VARIABLES */
     private GoogleMap mMap;
@@ -101,7 +101,7 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
 
         /* Intialize the campus buildings hashtable */
         campusBuildings[0] = new MapMarker("Performing Arts and Humanities", new LatLng(39.2549, -76.7147));
-        campusBuildings[1] = new MapMarker("Information Technology / Engineering", new LatLng(39.2537, - 76.7142));
+        campusBuildings[1] = new MapMarker("Information Technology", new LatLng(39.2537, - 76.7142));
         campusBuildings[2] = new MapMarker("Engineering", new LatLng(39.2544, -76.7139));
         campusBuildings[3] = new MapMarker("Fine Arts", new LatLng(39.2550, -76.7135));
         campusBuildings[4] = new MapMarker("Sherman Hall", new LatLng(39.2536, -76.7134));
@@ -109,11 +109,11 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
         campusBuildings[6] = new MapMarker("Meyerhoff", new LatLng(39.2549, -76.7127));
         campusBuildings[7] = new MapMarker("Sondheim Hall", new LatLng(39.2533, -76.7128));
         campusBuildings[8] = new MapMarker("Math and Psychology", new LatLng(39.2541, -76.7124));
-        campusBuildings[9] = new MapMarker("Biological Sciences", new LatLng(39.2547, -76.7122));
+        campusBuildings[9] = new MapMarker("Biological Science", new LatLng(39.2547, -76.7122));
         campusBuildings[10] = new MapMarker("The Commons", new LatLng(39.2548, -76.7108));;
         campusBuildings[11] = new MapMarker("Physics", new LatLng(39.2544, -76.7095));
         campusBuildings[12] = new MapMarker("Public Policy", new LatLng(39.2552, -76.7091));
-        campusBuildings[13] = new MapMarker("Library", new LatLng(39.2565, -76.7114));
+        campusBuildings[13] = new MapMarker("AOK Library", new LatLng(39.2565, -76.7114));
         campusBuildings[14] = new MapMarker("Retriever Activities Center", new LatLng(39.2528, -76.7124));
     }
 
