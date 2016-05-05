@@ -120,7 +120,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             URL url;
 
             try {
-                url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_user.php?username=" + user_creds[0] + "&password=" + user_creds[1]);
+                url = new URL("http://mpss.csce.uark.edu/~palande1/log_user_in.php?username=" + user_creds[0] + "&password=" + user_creds[1]);
                 HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
@@ -139,9 +139,14 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         protected void onPostExecute(String result)
         {
-            if(Integer.valueOf(result) == 0)
+            int val = Integer.valueOf(result);
+            if(val <= 0)
             {
-                Toast.makeText(getApplicationContext(), "Either the username or password entered is incorrect!", Toast.LENGTH_LONG).show();
+                if(val == 0)
+                    Toast.makeText(getApplicationContext(), "Either the username or password entered is incorrect!", Toast.LENGTH_LONG).show();
+                else if(val == -1)
+                    Toast.makeText(getApplicationContext(), "This user is already logged in!", Toast.LENGTH_LONG).show();
+
                 numAttempts--;
 
                 loginBtn.setEnabled(true);
