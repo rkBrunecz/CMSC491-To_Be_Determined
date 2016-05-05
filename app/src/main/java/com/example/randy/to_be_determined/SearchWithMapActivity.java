@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * This class displays a map activity that updates dynamically with markers to show which buildings
@@ -188,7 +189,7 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
             i = Integer.parseInt(pos[0]);
 
             try {
-                url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_post_buildings.php?username=" + ((SpotSwap) getApplication()).getUserName() + "&location=" + campusBuildings[i].name);
+                url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_post_buildings.php?username=" + ((SpotSwap) getApplication()).getUserName() + "&location=" + URLEncoder.encode(campusBuildings[i].name, "UTF-8"));
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
