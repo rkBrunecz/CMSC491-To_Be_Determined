@@ -21,7 +21,8 @@ _id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 username VARCHAR(30) NOT NULL,
 password VARCHAR(30) NOT NULL,
 email VARCHAR(30) NOT NULL,
-phonenum VARCHAR(30) NOT NULL
+phonenum VARCHAR(30) NOT NULL,
+loggedin VARCHAR(5) NOT NULL
 )";
 
 if($conn->query($sql) === TRUE){
@@ -32,8 +33,8 @@ else {
 }
 
 // Add an Admin account to the users table
-$sql = "INSERT INTO Users (username, password, email, phonenum) 
-VALUES ('Admin', 'Admin', 'brunecz1@umbc.edu', '4108293586')";
+$sql = "INSERT INTO Users (username, password, email, phonenum, loggedin) 
+VALUES ('Admin', 'Admin', 'brunecz1@umbc.edu', '4108293586', 'FALSE')";
 if($conn->query($sql) === TRUE){
 	echo "Admin account created successfully" . "<br>";
 } else {

@@ -19,8 +19,8 @@ if($conn->connect_error)
 }
 
 // Add a user account to the users table
-$sql = "INSERT INTO Users (username, password, email, phonenum) 
-VALUES ('". $user_name. "', '". $user_pass. "', '". $email. "', '". $phonenum. "')";
+$sql = "INSERT INTO Users (username, password, email, phonenum, loggedin) 
+VALUES ('". $user_name. "', '". $user_pass. "', '". $email. "', '". $phonenum. "', 'FALSE')";
 
 if($conn->query($sql) === TRUE){
 	echo "Success" . "<br>";
