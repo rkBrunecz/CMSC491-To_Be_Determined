@@ -1,27 +1,31 @@
 package com.example.randy.to_be_determined;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 /**
  * Created by Randy on 4/7/2016.
  */
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE VARIABLES */
-    private EditText passwordEdit, userNameEdit, confirmPasswordEdit, emailEdit;
+    private EditText passwordEdit, userNameEdit, confirmPasswordEdit, emailEdit, phoneNumberEdit;
     private Button createAccountBtn, cancelBtn;
-    private DatabaseHelper dbhelper;
-    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         userNameEdit = (EditText)findViewById(R.id.enterUserEdit);
         confirmPasswordEdit= (EditText)findViewById(R.id.confirmPassEdit);
         emailEdit = (EditText)findViewById(R.id.enterEmailEdit);
+        phoneNumberEdit = (EditText)findViewById(R.id.enterPhoneNumberEdit);
         createAccountBtn = (Button)findViewById(R.id.createAccountBtn);
         cancelBtn = (Button)findViewById(R.id.cancelBtn);
 
@@ -42,19 +47,21 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterUsernameTxt), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterPassTxt), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.confirmPassTxt), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.enterPhoneNumberTxt), getAssets());
         CustomFont.setCustomFont("VitaStd-Bold.ttf", cancelBtn, getAssets());
         CustomFont.setCustomFont("VitaStd-Bold.ttf", createAccountBtn, getAssets());
         CustomFont.setCustomFont("VitaStd-Light.ttf", emailEdit, getAssets());
         CustomFont.setCustomFont("VitaStd-Light.ttf", userNameEdit, getAssets());
         CustomFont.setCustomFont("VitaStd-Light.ttf", passwordEdit, getAssets());
         CustomFont.setCustomFont("VitaStd-Light.ttf", confirmPasswordEdit, getAssets());
+        CustomFont.setCustomFont("VitaStd-Light.ttf", phoneNumberEdit, getAssets());
 
         /* Set up on click listeners */
         cancelBtn.setOnClickListener(this);
         createAccountBtn.setOnClickListener(this);
 
-        dbhelper = new DatabaseHelper(getApplicationContext());
-        db = dbhelper.getWritableDatabase();
+        //dbhelper = new DatabaseHelper(getApplicationContext());
+        //db = dbhelper.getWritableDatabase();
     }
 
     @Override
@@ -109,29 +116,62 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
                     validAccount = false;
                 }
+                if(phoneNumberEdit.getText().length() != 10)
+                {
+                    Toast.makeText(getApplicationContext(), "Phone number must be 10 digits!", Toast.LENGTH_SHORT).show();
+
+                    if(phoneNumberEdit.getText().length() == 0)
+                        phoneNumberEdit.setHintTextColor(Color.RED);
+
+                    validAccount = false;
+                }
+
+                /*Ensure that the username, password, and email address do not contain spaces in them. */
+                if(userNameEdit.getText().toString().contains(" "))
+                {
+                    Toast.makeText(getApplicationContext(), "Username cannot contains spaces!", Toast.LENGTH_SHORT).show();
+
+                    userNameEdit.setHintTextColor(Color.RED);
+
+                    validAccount = false;
+                }
+                if(passwordEdit.getText().toString().contains(" "))
+                {
+                    Toast.makeText(getApplicationContext(), "Passwords cannot contain spaces!", Toast.LENGTH_SHORT).show();
+
+                    passwordEdit.setHintTextColor(Color.RED);
+                    passwordEdit.setText("");
+
+                    validAccount = false;
+                }
+                if(emailEdit.getText().toString().contains(" "))
+                {
+                    Toast.makeText(getApplicationContext(), "Email address must not contain spaces!", Toast.LENGTH_SHORT).show();
+
+                    emailEdit.setHintTextColor(Color.RED);
+                    emailEdit.setText(""); //Clear email text
+
+                    validAccount = false;
+                }
 
                 /* Create an account! */
                 if(validAccount) {
-                    long returnVal = createUser(userNameEdit.getText().toString(), passwordEdit.getText().toString(), emailEdit.getText().toString());
-                    if (returnVal >= 0) {
-                        Toast.makeText(getApplicationContext(), "Account created!", Toast.LENGTH_SHORT).show();
-                        finish(); //Destroy activity
-                    } else if (returnVal == -1)
-                        Toast.makeText(getApplicationContext(), "Account creation failed! Please try again later.", Toast.LENGTH_LONG).show();
-                    else if (returnVal == -2)
-                    {
-                        Toast.makeText(getApplicationContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
-                        userNameEdit.setHintTextColor(Color.RED);
-                        userNameEdit.setText(""); //Clear email text
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(), "Provided email is associated with another account already!", Toast.LENGTH_LONG).show();
-                        emailEdit.setHintTextColor(Color.RED);
-                        emailEdit.setText(""); //Clear email text
-                    }
+                    /* Deactivate buttons and edit boxes */
+                    createAccountBtn.setEnabled(false);
+                    createAccountBtn.setAlpha(0.5f);
 
-                    validAccount = false;
+                    cancelBtn.setEnabled(false);
+                    cancelBtn.setAlpha(0.5f);
+
+                    emailEdit.setEnabled(false);
+                    passwordEdit.setEnabled(false);
+                    confirmPasswordEdit.setEnabled(false);
+                    phoneNumberEdit.setEnabled(false);
+                    userNameEdit.setEnabled(false);
+
+                    Toast.makeText(getApplicationContext(), "Creating account...", Toast.LENGTH_SHORT).show();
+
+                    new CheckUserCreditials().execute(userNameEdit.getText().toString(), emailEdit.getText().toString(), phoneNumberEdit.getText().toString());
                 }
 
                 break;
@@ -143,39 +183,129 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    public long createUser(String userName, String password, String email)
-    {
-        Cursor c = fetchUsername(userName);
+    public class CheckUserCreditials extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... user_creds)
+        {
+            /* LOCAL VARIABLES */
+            String s = "";
+            URL url;
 
-        if(c.getCount() > 0)
-            return -2;
+            try {
+                url = new URL("http://mpss.csce.uark.edu/~palande1/check_for_account.php?username=" + user_creds[0] + "&email=" + user_creds[1] + "&phonenum=" + user_creds[2]);
+                HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-        c = fetchEmail(email);
-        if(c.getCount() > 0)
-            return -3;
+                s = responseStreamReader.readLine();
+                Log.i("Response", s);
 
-        c.close();
+                urlConnection.disconnect();
+            } catch(IOException e) {
+                System.out.println("Error: " + "http://mpss.csce.uark.edu/~palande1/check_for_account.php?username=" + user_creds[0] + "&email=" + user_creds[1] + "&phonenum=" + user_creds[2]);
+                e.printStackTrace();
+            }
 
-        ContentValues values = createContentValues(userName, password, email);
-        return db.insert("users", null,values);
+            return s;
+        }
+
+        protected void onPostExecute(String result)
+        {
+            boolean createAccount = true;
+
+            if (result.charAt(0) == '1')
+            {
+                Toast.makeText(getApplicationContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
+                userNameEdit.setHintTextColor(Color.RED);
+                userNameEdit.setText(""); //Clear email text
+
+                createAccount = false;
+            }
+            if (result.charAt(2) == '1')
+            {
+                Toast.makeText(getApplicationContext(), "Provided email is associated with another account already!", Toast.LENGTH_LONG).show();
+                emailEdit.setHintTextColor(Color.RED);
+                emailEdit.setText(""); //Clear email text
+
+                createAccount = false;
+            }
+            if(result.charAt(4) == '1')
+            {
+                Toast.makeText(getApplicationContext(), "Provided phone number is associated with another account already!", Toast.LENGTH_LONG).show();
+                phoneNumberEdit.setHintTextColor(Color.RED);
+                phoneNumberEdit.setText(""); //Clear email text
+
+                createAccount = false;
+            }
+
+            if(createAccount)
+                new InsertAccount().execute(userNameEdit.getText().toString(), passwordEdit.getText().toString(), emailEdit.getText().toString(), phoneNumberEdit.getText().toString());
+            else
+            {
+                /* Reactivate buttons and edit boxes */
+                createAccountBtn.setEnabled(true);
+                createAccountBtn.setAlpha(1f);
+
+                cancelBtn.setEnabled(true);
+                cancelBtn.setAlpha(1f);
+
+                emailEdit.setEnabled(true);
+                passwordEdit.setEnabled(true);
+                confirmPasswordEdit.setEnabled(true);
+                phoneNumberEdit.setEnabled(true);
+                userNameEdit.setEnabled(true);
+            }
+        }
     }
 
-    private ContentValues createContentValues(String userName, String password, String email)
-    {
-        ContentValues values = new ContentValues();
-        values.put("username", userName);
-        values.put("password", password);
-        values.put("email", email);
-        return values;
-    }
+    public class InsertAccount extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... user_creds)
+        {
+            /* LOCAL VARIABLES */
+            String s = "";
+            URL url;
 
-    public Cursor fetchUsername(String name)
-    {
-        return db.query("users", new String[]{"username"}, "username=?", new String[]{name}, null, null, null);
-    }
+            try {
+                url = new URL("http://mpss.csce.uark.edu/~palande1/insert_user.php?username=" + user_creds[0] + "&password=" + user_creds[1] + "&email=" + user_creds[2] + "&phonenum=" + user_creds[3]);
+                HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-    public Cursor fetchEmail(String email)
-    {
-        return db.query("users", new String[]{"email"}, "email=?", new String[]{email}, null, null, null);
+                s = responseStreamReader.readLine();
+                Log.i("Response", s);
+
+                urlConnection.disconnect();
+            } catch(IOException e) {
+                System.out.println("Error: " + "http://mpss.csce.uark.edu/~palande1/fetch_user.php?username=" + user_creds[0] + "&password=" + user_creds[1]);
+                e.printStackTrace();
+            }
+
+            return s;
+        }
+
+        protected void onPostExecute(String result)
+        {
+            if (result.contains("Success"))
+            {
+                Toast.makeText(getApplicationContext(), "Account created!", Toast.LENGTH_SHORT).show();
+                finish(); //Destroy activity
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Account creation failed, please try again.", Toast.LENGTH_SHORT).show();
+
+                /* Reactivate buttons and edit boxes */
+                createAccountBtn.setEnabled(true);
+                createAccountBtn.setAlpha(1f);
+
+                cancelBtn.setEnabled(true);
+                cancelBtn.setAlpha(1f);
+
+                emailEdit.setEnabled(true);
+                passwordEdit.setEnabled(true);
+                confirmPasswordEdit.setEnabled(true);
+                phoneNumberEdit.setEnabled(true);
+                userNameEdit.setEnabled(true);
+            }
+        }
     }
 }

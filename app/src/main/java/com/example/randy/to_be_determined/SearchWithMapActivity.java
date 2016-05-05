@@ -1,10 +1,10 @@
 package com.example.randy.to_be_determined;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,6 +15,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * This class displays a map activity that updates dynamically with markers to show which buildings
@@ -29,14 +37,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class SearchWithMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     /* PRIVATE CONSTANTS */
-    private final int DELAY = 1000;
+    private final int DELAY = 10000;
 
     /* PRIVATE VARIABLES */
     private GoogleMap mMap;
     private MapMarker campusBuildings[] = new MapMarker[15];
     private Handler handler = new Handler();
-    private DatabaseHelper dbhelper;
-    private SQLiteDatabase db;
 
     private class MapMarker{
         /* PRIVATE VARIABLES */
@@ -75,16 +81,12 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
 
         @Override
         public void run() {
-            if (mMap != null)
-            {
-                for (int i = 0; i < 15; i++) {
-                    Cursor locs = fetchLocations(campusBuildings[i].name, ((SpotSwap)getApplication()).getUserName());
-                    campusBuildings[i].updateNumSpots(locs.getCount());
-                    locs.close();
-                }
+            if (mMap != null) {
+                for(int i = 0; i < 15; i++)
+                    new FindNumSpots().execute(Integer.toString(i));
             }
 
-            handler.postDelayed(this, DELAY);
+            handler.postDelayed(new UpdateMapMarkers(), DELAY);
         }
     }
 
@@ -113,9 +115,6 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
         campusBuildings[12] = new MapMarker("Public Policy", new LatLng(39.2552, -76.7091));
         campusBuildings[13] = new MapMarker("Library", new LatLng(39.2565, -76.7114));
         campusBuildings[14] = new MapMarker("Retriever Activities Center", new LatLng(39.2528, -76.7124));
-
-        dbhelper = new DatabaseHelper(getApplicationContext());
-        db = dbhelper.getWritableDatabase();
     }
 
     @Override
@@ -177,8 +176,36 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(umbcCamera));
     }
 
-    public Cursor fetchLocations(String loc, String username)
-    {
-        return db.query("posts", new String[]{"location"}, "location=? and reserved=? and username!=?", new String[]{loc, "No", username}, null, null, null);
+    public class FindNumSpots extends AsyncTask<String, Void, String> {
+        private int i = 0;
+
+        protected String doInBackground(String... pos)
+        {
+            /* LOCAL VARIABLES */
+            String s = "";
+            URL url;
+
+            i = Integer.parseInt(pos[0]);
+
+            try {
+                url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_post_buildings.php?username=" + ((SpotSwap) getApplication()).getUserName() + "&location=" + campusBuildings[i].name);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
+
+                s = responseStreamReader.readLine();
+                Log.i("Response", s);
+
+                urlConnection.disconnect();
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+
+            return s;
+        }
+
+        protected void onPostExecute(String result) {
+            campusBuildings[i].updateNumSpots(Integer.valueOf(result));
+        }
     }
 }

@@ -1,18 +1,25 @@
 package com.example.randy.to_be_determined;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by Randy on 4/3/2016.
@@ -25,8 +32,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private Button loginBtn;
     private TextView forgotPassword, signUp;
     private int numAttempts = 5; //Lock a user out from logging in if this reaches zero
-    private DatabaseHelper dbhelper;
-    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +65,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         /* Underline the sign up and forgot password text */
         signUp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
-        dbhelper = new DatabaseHelper(getApplicationContext());
-        db = dbhelper.getReadableDatabase();
     }
 
     @Override
@@ -81,25 +83,16 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         passwordText.setHintTextColor(Color.RED);
                         Toast.makeText(passwordText.getContext(), "No password was entered or password was too short (minimum of 5 characters)!", Toast.LENGTH_LONG).show();
                     }
-                } //Check to see if the username and password do not match an account in the database.
-                else if(fetchUser(userNameText.getText().toString(), passwordText.getText().toString()) == 0)
-                {
-                    Toast.makeText(getApplicationContext(), "Either the username or password entered is incorrect!", Toast.LENGTH_LONG).show();
-                    numAttempts--;
-
-                    //Lock the user out from logging in if number of attempts reaches zero
-                    if(numAttempts == 0)
-                    {
-                        loginBtn.setEnabled(false);
-                        loginBtn.setBackgroundColor(Color.GRAY);
-                        Toast.makeText(getApplicationContext(), "Too many attempts, please try again later.", Toast.LENGTH_LONG).show();
-                    }
                 }
-                else //Username and password are a match.
+                else //Check to see if the username and password do not match an account in the database.
                 {
-                    ((SpotSwap)getApplication()).setUserName(userNameText.getText().toString());
-                    finish(); //Destroy activity
-                    startActivity(mainIntent);
+                    Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();
+
+                    //Disable the login button
+                    loginBtn.setEnabled(false);
+                    loginBtn.setAlpha(0.5f);
+
+                    new RetrieveInputStream().execute(userNameText.getText().toString(), passwordText.getText().toString());
                 }
 
                 break;
@@ -119,13 +112,55 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public int fetchUser(String name, String password)
-    {
-        Cursor c = db.query("users", new String[]{"username, password"}, "username=? and password=?", new String[]{name, password}, null, null, null);
-        int count = c.getCount();
+    public class RetrieveInputStream extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... user_creds)
+        {
+            /* LOCAL VARIABLES */
+            String s = "";
+            URL url;
 
-        c.close();
+            try {
+                url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_user.php?username=" + user_creds[0] + "&password=" + user_creds[1]);
+                HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-        return count;
+                s = responseStreamReader.readLine();
+                Log.i("Response", s);
+
+                urlConnection.disconnect();
+            } catch(IOException e) {
+                System.out.println("Error: " + "http://mpss.csce.uark.edu/~palande1/fetch_user.php?username=" + user_creds[0] + "&password=" + user_creds[1]);
+                e.printStackTrace();
+            }
+
+            return s;
+        }
+
+        protected void onPostExecute(String result)
+        {
+            if(Integer.valueOf(result) == 0)
+            {
+                Toast.makeText(getApplicationContext(), "Either the username or password entered is incorrect!", Toast.LENGTH_LONG).show();
+                numAttempts--;
+
+                loginBtn.setEnabled(true);
+                loginBtn.setAlpha(1f);
+
+                //Lock the user out from logging in if number of attempts reaches zero
+                if (numAttempts == 0) {
+                    loginBtn.setEnabled(false);
+                    loginBtn.setAlpha(0.5f);
+                    Toast.makeText(getApplicationContext(), "Too many attempts, please try again later.", Toast.LENGTH_LONG).show();
+                }
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Welcome " + userNameText.getText().toString() + "!", Toast.LENGTH_SHORT).show();
+                ((SpotSwap) getApplication()).setUserName(userNameText.getText().toString());
+                finish(); //Destroy activity
+                startActivity(mainIntent);
+            }
+        }
     }
 }

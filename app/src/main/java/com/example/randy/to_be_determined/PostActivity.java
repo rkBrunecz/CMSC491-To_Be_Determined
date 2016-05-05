@@ -1,13 +1,12 @@
 package com.example.randy.to_be_determined;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,11 +17,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
-
-    /* CONSTANTS */
-    private static final int NUM_FEATURES = 6;
-
     /* PRIVATE VARIABLES */
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
@@ -37,8 +41,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                      "Sherman Hall", "Fine Arts", "Engineering", "Information Technology", "Performing Arts and Humanities"};
     private String flr[] = {"1st floor","2nd floor","3rd floor", "4th floor", "5th floor", "6th floor", "7th floor"};
     private ArrayAdapter<String> locarr, flrarr, seatsarr;
-    private DatabaseHelper dbhelper;
-    private SQLiteDatabase db;
     private Uri imageUri;
 
     @Override
@@ -96,9 +98,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         post.setOnClickListener(this);
         photoButton.setOnClickListener(this);
-
-        dbhelper = new DatabaseHelper(getApplicationContext());
-        db = dbhelper.getWritableDatabase();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -138,28 +137,31 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 String l = location.getSelectedItem().toString();
                 String seats = numSeats.getSelectedItem().toString();
                 String desc = description.getText().toString();
-                short features[] =  new short[NUM_FEATURES]; // 1 for true, 0 otherwise
+                String windowf = "FALSE";
+                String outletf = "FALSE";
+                String scannerf = "FALSE";
+                String whiteboardf = "FALSE";
+                String macComputerf = "FALSE";
+                String rockingChairf = "FALSE";
 
                 if(window.isChecked())
-                    features[0] = 1;
+                    windowf = "TRUE";
                 if(outlet.isChecked())
-                    features[1] = 1;
+                    outletf = "TRUE";
                 if(scanner.isChecked())
-                    features[2] = 1;
+                    scannerf = "TRUE";
                 if(whiteboard.isChecked())
-                    features[3] = 1;
+                    whiteboardf = "TRUE";
                 if(macComputer.isChecked())
-                    features[4] = 1;
+                    macComputerf = "TRUE";
                 if(rockingChair.isChecked())
-                    features[5] = 1;
+                    rockingChairf = "TRUE";
 
                 if(desc.isEmpty())
                     desc = "None";
 
-                if(createPost(l, f, seats, desc, features) < 0)
-                    Toast.makeText(getApplicationContext(), "An error occurred. Please try again later.", Toast.LENGTH_LONG);
-                else
-                    Toast.makeText(getApplicationContext(), "Posting...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Posting...", Toast.LENGTH_SHORT).show();
+                new CreatePost().execute(((SpotSwap)getApplication()).getUserName(), l, f, seats, desc, windowf, outletf, scannerf, whiteboardf, macComputerf, rockingChairf);
 
                 finish();
 
@@ -175,37 +177,42 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public class CreatePost extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... post)
+        {
+            /* LOCAL VARIABLES */
+            String s = "";
+            URL url;
 
-    public long createPost(String location, String floor, String seats, String desc, short features[])
-    {
-        ContentValues values = createContentValues(((SpotSwap)getApplication()).getUserName() , location, floor, seats, desc, features);
-        return db.insert("posts", null,values);
-    }
+            try {
+                String params = "username=" + URLEncoder.encode(post[0], "UTF-8") + "&location=" + URLEncoder.encode(post[1], "UTF-8") + "&floor=" + URLEncoder.encode(post[2], "UTF-8") +
+                        "&numseats=" + URLEncoder.encode(post[3], "UTF-8") + "&description=" + URLEncoder.encode(post[4], "UTF-8") + "&windowseat=" + URLEncoder.encode(post[5], "UTF-8") +
+                        "&poweroutlet=" + URLEncoder.encode(post[6], "UTF-8") + "&scanner=" + URLEncoder.encode(post[7], "UTF-8") + "&whiteboard=" + URLEncoder.encode(post[8], "UTF-8") +
+                        "&maccomputers=" + URLEncoder.encode(post[9], "UTF-8") + "&rockingchair=" + URLEncoder.encode(post[10], "UTF-8");
 
-    private ContentValues createContentValues(String userName, String location, String floor, String seats, String desc, short features[])
-    {
-        ContentValues values = new ContentValues();
+                url = new URL("http://mpss.csce.uark.edu/~palande1/insert_post.php?" + params + "&image=" + photo);
 
-        values.put("username", userName);
-        values.put("location", location);
-        values.put("floor", floor);
-        values.put("numseats", seats);
-        values.put("description", desc);
-        values.put("windowseat", features[0]);
-        values.put("poweroutlet", features[1]);
-        values.put("scanner", features[2]);
-        values.put("whiteboard", features[3]);
-        values.put("maccomputers", features[4]);
-        values.put("rockingchair", features[5]);
+                HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-        if(imageUri != null)
-            values.put("imguri", imageUri.toString());
-        else
-            values.put("imguri", "None");
+                s = responseStreamReader.readLine();
+                Log.i("Response", url.toString() + "\n" + s);
 
-        //Reserved column can be either yes or no. All new posts start with no in this column
-        values.put("reserved", "No");
+                urlConnection.disconnect();
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
 
-        return values;
+            return s;
+        }
+
+        protected void onPostExecute(String result)
+        {
+            if(result.contains("Success"))
+                Toast.makeText(getApplicationContext(), "Posted successfully!", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getApplicationContext(), "Post failed!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
