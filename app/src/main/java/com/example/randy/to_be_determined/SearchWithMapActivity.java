@@ -82,12 +82,8 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
 
         @Override
         public void run() {
-            if (mMap != null) {
-                for(int i = 0; i < 15; i++)
-                    new FindNumSpots().execute(Integer.toString(i));
-            }
-
-            handler.postDelayed(new UpdateMapMarkers(), DELAY);
+            if (mMap != null)
+                    new FindNumSpots().execute();
         }
     }
 
@@ -129,7 +125,7 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
     protected void onResume()
     {
         super.onResume();
-        handler.postDelayed(new UpdateMapMarkers(), DELAY);
+        handler.postDelayed(new UpdateMapMarkers(), 0);
     }
 
     /**
@@ -177,27 +173,28 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(umbcCamera));
     }
 
-    public class FindNumSpots extends AsyncTask<String, Void, String> {
-        private int i = 0;
+    public class FindNumSpots extends AsyncTask<Void, Void, String> {
+        String [] spots = new String[15];
 
-        protected String doInBackground(String... pos)
+        protected String doInBackground(Void... v)
         {
             /* LOCAL VARIABLES */
-            String s = "";
             URL url;
-
-            i = Integer.parseInt(pos[0]);
+            String s = "";
 
             try {
-                url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_post_buildings.php?username=" + ((SpotSwap) getApplication()).getUserName() + "&location=" + URLEncoder.encode(campusBuildings[i].name, "UTF-8"));
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
+                for(int i = 0; i < 15; i++)
+                {
+                    url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_post_buildings.php?username=" + ((SpotSwap) getApplication()).getUserName() + "&location=" + URLEncoder.encode(campusBuildings[i].name, "UTF-8"));
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-                s = responseStreamReader.readLine();
-                Log.i("Response", s);
+                    spots[i] = responseStreamReader.readLine();
+                    Log.i("Response", s);
 
-                urlConnection.disconnect();
+                    urlConnection.disconnect();
+                }
             } catch(IOException e) {
                 e.printStackTrace();
             }
@@ -206,7 +203,10 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
         }
 
         protected void onPostExecute(String result) {
-            campusBuildings[i].updateNumSpots(Integer.valueOf(result));
+            for(int i = 0; i < 15; i++)
+                campusBuildings[i].updateNumSpots(Integer.valueOf(spots[i]));
+
+            handler.postDelayed(new UpdateMapMarkers(), DELAY);
         }
     }
 }
