@@ -37,7 +37,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private CheckBox window, outlet, scanner, whiteboard, macComputer, rockingChair;
     private Button post;
     private String numberOfSeats[] = {"One", "Two", "Three", "Four", "Five", "Six", "Seven"};
-    private String loc[] = { "Library", "University Center", "Math and Psychology", "Biological Science",
+    private String loc[] = { "AOK Library", "University Center", "Math and Psychology", "Biological Science",
                      "Sherman Hall", "Fine Arts", "Engineering", "Information Technology", "Performing Arts and Humanities"};
     private String flr[] = {"1st floor","2nd floor","3rd floor", "4th floor", "5th floor", "6th floor", "7th floor"};
     private ArrayAdapter<String> locarr, flrarr, seatsarr;
