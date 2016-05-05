@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:background="#ffc313">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:background="#ffc313"
         android:nestedScrollingEnabled="false"
-        android:scrollIndicators="right">
+        android:scrollIndicators="right"
+        android:layout_gravity="center"
+        android:layout_weight="1">
 
         <EditText
             android:layout_width="280dp"
@@ -172,9 +174,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spotSwapCreateAccount"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:id="@+id/spotSwapCreateAccount"
             android:text="SPOTSWAP"
             android:textSize="60dp"
             android:textColor="#000000"
