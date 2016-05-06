@@ -161,7 +161,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             }
             else
             {
-                Toast.makeText(getApplicationContext(), "Welcome " + userNameText.getText().toString() + "!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Welcome, " + userNameText.getText().toString() + "!", Toast.LENGTH_SHORT).show();
                 ((SpotSwap) getApplication()).setUserName(userNameText.getText().toString());
                 finish(); //Destroy activity
                 startActivity(mainIntent);
