@@ -12,10 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.findSpotBtn:
-                Intent searchIntent = new Intent(this, SearchWithMapActivity.class);
+                Intent searchIntent = new Intent(this, SearchBasicActivity.class);
                 startActivity(searchIntent);
                 break;
 
