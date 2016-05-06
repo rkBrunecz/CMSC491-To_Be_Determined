@@ -59,9 +59,6 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         /* Set up on click listeners */
         cancelBtn.setOnClickListener(this);
         createAccountBtn.setOnClickListener(this);
-
-        //dbhelper = new DatabaseHelper(getApplicationContext());
-        //db = dbhelper.getWritableDatabase();
     }
 
     @Override
