@@ -1,10 +1,15 @@
 package com.example.randy.to_be_determined;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,15 +40,17 @@ import java.net.URLEncoder;
  * http://stackoverflow.com/questions/15925319/how-to-disable-android-map-marker-click-auto-center
  * https://developers.google.com/maps/documentation/android-api/infowindows#custom_info_windows
  */
-public class SearchWithMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+public class SearchWithMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener, View.OnClickListener {
 
     /* PRIVATE CONSTANTS */
     private final int DELAY = 2500;
+    public final static String EXTRA_MESSAGE = "com.example.randy.to_be_determined.MESSAGE";
 
     /* PRIVATE VARIABLES */
     private GoogleMap mMap;
     private MapMarker campusBuildings[] = new MapMarker[15];
     private Handler handler = new Handler();
+    private Button basicSearchBtn;
 
     private class MapMarker{
         /* PRIVATE VARIABLES */
@@ -58,7 +65,7 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
             markerOps.position(pos);
             markerOps.title(name);
             markerOps.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            markerOps.snippet("Number of Spots: " + numSpotsAvailable);
+            markerOps.snippet("Spots available: " + numSpotsAvailable);
             markerOps.visible(false);
         }
 
@@ -112,6 +119,14 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
         campusBuildings[12] = new MapMarker("Public Policy", new LatLng(39.2552, -76.7091));
         campusBuildings[13] = new MapMarker("AOK Library", new LatLng(39.2565, -76.7114));
         campusBuildings[14] = new MapMarker("Retriever Activities Center", new LatLng(39.2528, -76.7124));
+
+        basicSearchBtn = (Button) findViewById(R.id.basicSearchBtn);
+
+        /* Set up custom font */
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView)findViewById(R.id.mapSearch), getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", basicSearchBtn, getAssets());
+
+        basicSearchBtn.setOnClickListener(this);
     }
 
     @Override
@@ -126,6 +141,19 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
     {
         super.onResume();
         handler.postDelayed(new UpdateMapMarkers(), 0);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch(v.getId())
+        {
+            case R.id.basicSearchBtn:
+                Intent intent = new Intent(this, SearchBasicActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
     }
 
     /**
@@ -147,6 +175,7 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
         mMap.getUiSettings().setMapToolbarEnabled(false);
 
         mMap.setOnMapClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
 
         // Move camera to UMBC
         LatLng umbc = new LatLng(39.2547, -76.7121);
@@ -171,6 +200,15 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
                 .zoom(16.3f)
                 .build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(umbcCamera));
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker m)
+    {
+        /*
+        Intent selectSpotActivity = new Intent(this, ListOfSpots.class);
+        selectSpotActivity.putExtra(EXTRA_MESSAGE, m.getTitle().toString());
+        startActivity(selectSpotActivity);*/
     }
 
     public class FindNumSpots extends AsyncTask<Void, Void, String> {
