@@ -174,7 +174,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SCANNER"
+            android:text="PC"
             android:id="@+id/checkBox3"
             android:checked="false"
             android:textSize="@dimen/abc_dialog_padding_top_material"
@@ -194,7 +194,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MAC COMPUTERS"
+            android:text="MAC"
             android:id="@+id/checkBox5"
             android:checked="false"
             android:textSize="@dimen/abc_dialog_padding_top_material"
@@ -204,12 +204,22 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ROCKING CHAIR"
+            android:text="CHAIR"
             android:id="@+id/checkBox6"
             android:checked="false"
             android:textSize="@dimen/abc_dialog_padding_top_material"
             android:layout_below="@+id/checkBox5"
             android:layout_alignStart="@+id/checkBox5"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QUIET"
+            android:id="@+id/checkBox7"
+            android:checked="false"
+            android:textSize="@dimen/abc_dialog_padding_top_material"
+            android:layout_below="@+id/checkBox6"
+            android:layout_alignStart="@+id/checkBox5" />
 
         <TextView
             android:layout_width="wrap_content"
