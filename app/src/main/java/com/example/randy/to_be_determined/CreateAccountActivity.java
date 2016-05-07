@@ -1,5 +1,6 @@
 package com.example.randy.to_be_determined;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -153,19 +154,6 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
                 /* Create an account! */
                 if(validAccount) {
-                    /* Deactivate buttons and edit boxes */
-                    createAccountBtn.setEnabled(false);
-                    createAccountBtn.setAlpha(0.5f);
-
-                    cancelBtn.setEnabled(false);
-                    cancelBtn.setAlpha(0.5f);
-
-                    emailEdit.setEnabled(false);
-                    passwordEdit.setEnabled(false);
-                    confirmPasswordEdit.setEnabled(false);
-                    phoneNumberEdit.setEnabled(false);
-                    userNameEdit.setEnabled(false);
-
                     Toast.makeText(getApplicationContext(), "Creating account...", Toast.LENGTH_SHORT).show();
 
                     new CheckUserCreditials().execute(userNameEdit.getText().toString(), emailEdit.getText().toString(), phoneNumberEdit.getText().toString());
@@ -181,6 +169,8 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     public class CheckUserCreditials extends AsyncTask<String, Void, String> {
+       ProgressDialog loading;
+
         protected String doInBackground(String... user_creds)
         {
             /* LOCAL VARIABLES */
@@ -205,9 +195,16 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             return s;
         }
 
+        protected void onPreExecute()
+        {
+            loading = ProgressDialog.show(CreateAccountActivity.this, "Checking credentials", "Checking credentials...", true);
+        }
+
         protected void onPostExecute(String result)
         {
             boolean createAccount = true;
+
+            loading.dismiss();
 
             if (result.charAt(0) == '1')
             {
@@ -236,25 +233,12 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
             if(createAccount)
                 new InsertAccount().execute(userNameEdit.getText().toString(), passwordEdit.getText().toString(), emailEdit.getText().toString(), phoneNumberEdit.getText().toString());
-            else
-            {
-                /* Reactivate buttons and edit boxes */
-                createAccountBtn.setEnabled(true);
-                createAccountBtn.setAlpha(1f);
-
-                cancelBtn.setEnabled(true);
-                cancelBtn.setAlpha(1f);
-
-                emailEdit.setEnabled(true);
-                passwordEdit.setEnabled(true);
-                confirmPasswordEdit.setEnabled(true);
-                phoneNumberEdit.setEnabled(true);
-                userNameEdit.setEnabled(true);
-            }
         }
     }
 
     public class InsertAccount extends AsyncTask<String, Void, String> {
+        ProgressDialog loading;
+
         protected String doInBackground(String... user_creds)
         {
             /* LOCAL VARIABLES */
@@ -279,30 +263,23 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             return s;
         }
 
+        protected void onPreExecute()
+        {
+            loading = ProgressDialog.show(CreateAccountActivity.this, "Creating account", "Creating account...", true);
+        }
+
         protected void onPostExecute(String result)
         {
+            loading.dismiss();
+
             if (result.contains("Success"))
             {
                 Toast.makeText(getApplicationContext(), "Account created!", Toast.LENGTH_SHORT).show();
                 finish(); //Destroy activity
             }
             else
-            {
                 Toast.makeText(getApplicationContext(), "Account creation failed, please try again.", Toast.LENGTH_SHORT).show();
 
-                /* Reactivate buttons and edit boxes */
-                createAccountBtn.setEnabled(true);
-                createAccountBtn.setAlpha(1f);
-
-                cancelBtn.setEnabled(true);
-                cancelBtn.setAlpha(1f);
-
-                emailEdit.setEnabled(true);
-                passwordEdit.setEnabled(true);
-                confirmPasswordEdit.setEnabled(true);
-                phoneNumberEdit.setEnabled(true);
-                userNameEdit.setEnabled(true);
-            }
         }
     }
 }
