@@ -20,8 +20,8 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         echo "ID: " . $row["_id"]. " - Username: " . $row["username"]. " Location: " . $row["location"]. " Floor: ". $row["floor"]. " # of Seats: ". $row["numseats"]. " Description: ". $row["description"].
-		" Window Seat: ". $row["windowseat"]. " Power outlet: ". $row["poweroutlet"]. " Scanner: ". $row["scanner"]. " Whiteboard: ". $row["whiteboard"]. " Mac Computer: ". $row["maccomputers"]. " Rocking Chair: ".
-		$row["rockingchair"]. " Reserved to: ". $row["reservedto"]. "<br>";
+		" Window Seat: ". $row["windowseat"]. " Power outlet: ". $row["poweroutlet"]. " PC: ". $row["pc"]. " Whiteboard: ". $row["whiteboard"]. " Mac Computer: ". $row["maccomputers"]. " Chair: ".
+		$row["rockingchair"]. " Silent: ". $row["silence"]. " IMAGE: ". $row["image"]. " Reserved to: ". $row["reservedto"]. " Timestamp: ". $row["time"]. "<br>";
     }
 } else {
     echo "0 results";

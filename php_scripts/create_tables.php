@@ -51,12 +51,14 @@ numseats VARCHAR(30) NOT NULL,
 description VARCHAR(300) NOT NULL,
 windowseat VARCHAR(5) NOT NULL,
 poweroutlet VARCHAR(5) NOT NULL,
-scanner VARCHAR(5) NOT NULL,
+pc VARCHAR(5) NOT NULL,
 whiteboard VARCHAR(5) NOT NULL,
 maccomputers VARCHAR(5) NOT NULL,
 rockingchair VARCHAR(5) NOT NULL,
+silence VARCHAR(5) NOT NULL,
 image BLOB,
-reservedto VARCHAR(30)
+reservedto VARCHAR(30),
+time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
 
 if($conn->query($sql) === TRUE){

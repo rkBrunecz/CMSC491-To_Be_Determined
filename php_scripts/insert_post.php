@@ -6,10 +6,11 @@ $numseats = $_REQUEST["numseats"];
 $description = $_REQUEST["description"];
 $windowseat = $_REQUEST["windowseat"];
 $poweroutlet = $_REQUEST["poweroutlet"];
-$scanner = $_REQUEST["scanner"];
+$pc = $_REQUEST["pc"];
 $whiteboard = $_REQUEST["whiteboard"];
 $maccomputers = $_REQUEST["maccomputers"];
 $rockingchair = $_REQUEST["rockingchair"];
+$silence = $_REQUEST["silence"];
 $image = $_REQUEST["image"];
 
 $servername = "mpss.csce.uark.edu";
@@ -27,8 +28,8 @@ if($conn->connect_error)
 }
 
 // Add a post into the database
-$sql = "INSERT INTO Posts (username, location, floor, numseats, description, windowseat, poweroutlet, scanner, whiteboard, maccomputers, rockingchair, image, reservedto) 
-VALUES ('". $user_name. "', '". $location. "', '". $floor. "', '". $numseats. "', '". $description. "', '". $windowseat. "', '". $poweroutlet. "', '". $scanner. "', '". $whiteboard. "', '". $maccomputers. "', '". $rockingchair. "', ". $image. ", '')";
+$sql = "INSERT INTO Posts (username, location, floor, numseats, description, windowseat, poweroutlet, pc, whiteboard, maccomputers, rockingchair, silence, image, reservedto) 
+VALUES ('". $user_name. "', '". $location. "', '". $floor. "', '". $numseats. "', '". $description. "', '". $windowseat. "', '". $poweroutlet. "', '". $pc. "', '". $whiteboard. "', '". $maccomputers. "', '". $rockingchair. "', '". $silence. "', '". $image. "', '')";
 
 if($conn->query($sql) === TRUE){
 	echo "Success" . "<br>";
