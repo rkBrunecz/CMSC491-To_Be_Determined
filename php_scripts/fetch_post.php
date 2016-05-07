@@ -25,9 +25,9 @@ echo $result->num_rows. "<br>";
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-		echo $row["floor"]. "~". $row["numseats"]. "~". $row["description"]. "~". $row["windowseat"]. "~".
-		$row["poweroutlet"]. "~". $row["pc"]. "~". $row["whiteboard"]. "~". $row["maccomputers"]. "~". $row["rockingchair"]. "~".
-		$row["silence"]. "~". $row["image"]. "<br>"; 
+		echo $row["_id"]. "~". $row["username"]. "~". $row["location"]. "~". $row["floor"]. "~". $row["numseats"]. "~". $row["description"]. "~". $row["windowseat"]. "~".
+		$row["poweroutlet"]. "~". $row["pc"]. "~". $row["whiteboard"]. "~". $row["maccomputers"]. "~". $row["rockingchair"]. "~". $row["silence"]. "~". 
+		$row["image"]. "<br>"; 
 	}
 } 
 
