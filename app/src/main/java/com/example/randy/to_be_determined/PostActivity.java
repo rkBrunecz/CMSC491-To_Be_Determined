@@ -2,6 +2,7 @@ package com.example.randy.to_be_determined;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,7 +36,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private Spinner floor,  location, numSeats;
     private Bitmap photo;
     private EditText description;
-    private CheckBox window, outlet, scanner, whiteboard, macComputer, rockingChair;
+    private CheckBox window, outlet, pc, whiteboard, macComputer, rockingChair, quiet;
     private Button post;
     private String numberOfSeats[] = {"One", "Two", "Three", "Four", "Five", "Six", "Seven"};
     private String loc[] = { "AOK Library", "University Center", "Math and Psychology", "Biological Science",
@@ -56,10 +58,11 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         numSeats = (Spinner) findViewById(R.id.spinner3);
         window = (CheckBox) findViewById(R.id.checkBox);
         outlet = (CheckBox) findViewById(R.id.checkBox2);
-        scanner = (CheckBox) findViewById(R.id.checkBox3);
+        pc = (CheckBox) findViewById(R.id.checkBox3);
         whiteboard = (CheckBox) findViewById(R.id.checkBox4);
         macComputer = (CheckBox) findViewById(R.id.checkBox5);
         rockingChair = (CheckBox) findViewById(R.id.checkBox6);
+        quiet = (CheckBox) findViewById(R.id.checkBox7);
         post = (Button) findViewById(R.id.button2);
 
         locarr = new ArrayAdapter<String>(this,
@@ -80,10 +83,11 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.textView7), getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", window, getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", outlet, getAssets());
-        CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", scanner, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", pc, getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", whiteboard, getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", macComputer, getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", rockingChair, getAssets());
+        CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", quiet, getAssets());
         CustomFont.setCustomFont("VitaStd-Light.ttf", description, getAssets());
         CustomFont.setCustomFont("VitaStd-Bold.ttf", photoButton, getAssets());
         CustomFont.setCustomFont("VitaStd-Bold.ttf", post, getAssets());
@@ -139,29 +143,32 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 String desc = description.getText().toString();
                 String windowf = "FALSE";
                 String outletf = "FALSE";
-                String scannerf = "FALSE";
+                String pcf = "FALSE";
                 String whiteboardf = "FALSE";
                 String macComputerf = "FALSE";
                 String rockingChairf = "FALSE";
+                String quietf = "FALSE";
 
                 if(window.isChecked())
                     windowf = "TRUE";
                 if(outlet.isChecked())
                     outletf = "TRUE";
-                if(scanner.isChecked())
-                    scannerf = "TRUE";
+                if(pc.isChecked())
+                    pcf = "TRUE";
                 if(whiteboard.isChecked())
                     whiteboardf = "TRUE";
                 if(macComputer.isChecked())
                     macComputerf = "TRUE";
                 if(rockingChair.isChecked())
                     rockingChairf = "TRUE";
+                if(quiet.isChecked())
+                    quietf = "TRUE";
 
                 if(desc.isEmpty())
                     desc = "None";
 
                 Toast.makeText(getApplicationContext(), "Posting...", Toast.LENGTH_SHORT).show();
-                new CreatePost().execute(((SpotSwap)getApplication()).getUserName(), l, f, seats, desc, windowf, outletf, scannerf, whiteboardf, macComputerf, rockingChairf);
+                new CreatePost().execute(((SpotSwap)getApplication()).getUserName(), l, f, seats, desc, windowf, outletf, pcf, whiteboardf, macComputerf, rockingChairf, quietf);
 
                 finish();
 
@@ -187,10 +194,15 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 String params = "username=" + URLEncoder.encode(post[0], "UTF-8") + "&location=" + URLEncoder.encode(post[1], "UTF-8") + "&floor=" + URLEncoder.encode(post[2], "UTF-8") +
                         "&numseats=" + URLEncoder.encode(post[3], "UTF-8") + "&description=" + URLEncoder.encode(post[4], "UTF-8") + "&windowseat=" + URLEncoder.encode(post[5], "UTF-8") +
-                        "&poweroutlet=" + URLEncoder.encode(post[6], "UTF-8") + "&scanner=" + URLEncoder.encode(post[7], "UTF-8") + "&whiteboard=" + URLEncoder.encode(post[8], "UTF-8") +
-                        "&maccomputers=" + URLEncoder.encode(post[9], "UTF-8") + "&rockingchair=" + URLEncoder.encode(post[10], "UTF-8");
+                        "&poweroutlet=" + URLEncoder.encode(post[6], "UTF-8") + "&pc=" + URLEncoder.encode(post[7], "UTF-8") + "&whiteboard=" + URLEncoder.encode(post[8], "UTF-8") +
+                        "&maccomputers=" + URLEncoder.encode(post[9], "UTF-8") + "&rockingchair=" + URLEncoder.encode(post[10], "UTF-8") + "&silence=" + URLEncoder.encode(post[11], "UTF-8");
 
-                url = new URL("http://mpss.csce.uark.edu/~palande1/insert_post.php?" + params + "&image=" + photo);
+                byte[] img = null;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                img = bos.toByteArray();
+
+                url = new URL("http://mpss.csce.uark.edu/~palande1/insert_post.php?" + params + "&image=" + img);
 
                 HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
