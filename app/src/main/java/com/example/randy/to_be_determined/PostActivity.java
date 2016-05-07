@@ -7,12 +7,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Blob;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE VARIABLES */
@@ -43,7 +46,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                      "Sherman Hall", "Fine Arts", "Engineering", "Information Technology", "Performing Arts and Humanities"};
     private String flr[] = {"1st floor","2nd floor","3rd floor", "4th floor", "5th floor", "6th floor", "7th floor"};
     private ArrayAdapter<String> locarr, flrarr, seatsarr;
-    private Uri imageUri;
+    private  byte[] img = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +92,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", rockingChair, getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", quiet, getAssets());
         CustomFont.setCustomFont("VitaStd-Light.ttf", description, getAssets());
-        CustomFont.setCustomFont("VitaStd-Bold.ttf", photoButton, getAssets());
         CustomFont.setCustomFont("VitaStd-Bold.ttf", post, getAssets());
+        CustomFont.setCustomFont("VitaStd-Bold.ttf", photoButton, getAssets());
 
         locarr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         flrarr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -112,8 +115,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             imageView.setRotation(90);
             imageView.setOnClickListener(this);
             imageView.setClickable(true);
-
-            imageUri = data.getData();
 
             photoButton.setVisibility(View.INVISIBLE);
         }
@@ -188,28 +189,46 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         protected String doInBackground(String... post)
         {
             /* LOCAL VARIABLES */
+            int status = -1;
             String s = "";
+            String encodedImage = "null";
             URL url;
 
             try {
-                String params = "username=" + URLEncoder.encode(post[0], "UTF-8") + "&location=" + URLEncoder.encode(post[1], "UTF-8") + "&floor=" + URLEncoder.encode(post[2], "UTF-8") +
+                String server = "http://mpss.csce.uark.edu/~palande1/insert_post.php?" + "username=" + URLEncoder.encode(post[0], "UTF-8") + "&location=" + URLEncoder.encode(post[1], "UTF-8") + "&floor=" + URLEncoder.encode(post[2], "UTF-8") +
                         "&numseats=" + URLEncoder.encode(post[3], "UTF-8") + "&description=" + URLEncoder.encode(post[4], "UTF-8") + "&windowseat=" + URLEncoder.encode(post[5], "UTF-8") +
                         "&poweroutlet=" + URLEncoder.encode(post[6], "UTF-8") + "&pc=" + URLEncoder.encode(post[7], "UTF-8") + "&whiteboard=" + URLEncoder.encode(post[8], "UTF-8") +
                         "&maccomputers=" + URLEncoder.encode(post[9], "UTF-8") + "&rockingchair=" + URLEncoder.encode(post[10], "UTF-8") + "&silence=" + URLEncoder.encode(post[11], "UTF-8");
 
-                byte[] img = null;
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                img = bos.toByteArray();
+                if(photo != null) {
+                    photo.compress(Bitmap.CompressFormat.JPEG, 20, bos);
+                    img = bos.toByteArray();
+                    encodedImage = Base64.encodeToString(img, Base64.DEFAULT);
+                }
 
-                url = new URL("http://mpss.csce.uark.edu/~palande1/insert_post.php?" + params + "&image=" + img);
+                server += "&image=" + URLEncoder.encode(encodedImage, "UTF-8");
+
+                url = new URL(server);
 
                 HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-                s = responseStreamReader.readLine();
-                Log.i("Response", url.toString() + "\n" + s);
+                status = urlConnection.getResponseCode();
+                if(status > 400) {
+                    InputStream in = new BufferedInputStream(urlConnection.getErrorStream());
+                    BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
+                    s = "Error: " + responseStreamReader.readLine();
+
+                    Log.i("Response", s);
+                }
+                else
+                {
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
+                    s = responseStreamReader.readLine();
+
+                    Log.i("Response", s);
+                }
 
                 urlConnection.disconnect();
             } catch(IOException e) {
@@ -223,7 +242,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         {
             if(result.contains("Success"))
                 Toast.makeText(getApplicationContext(), "Posted successfully!", Toast.LENGTH_SHORT).show();
-            else
+            else if(result.contains("Error"))
                 Toast.makeText(getApplicationContext(), "Post failed!", Toast.LENGTH_SHORT).show();
         }
     }
