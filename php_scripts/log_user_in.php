@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
 	if($row["loggedin"] == "TRUE")
 		echo "-1";
 	else
-		echo "0 ";
+		echo "0";
 }
 
 $conn->close();

@@ -32,9 +32,9 @@ $sql = "INSERT INTO Posts (username, location, floor, numseats, description, win
 VALUES ('". $user_name. "', '". $location. "', '". $floor. "', '". $numseats. "', '". $description. "', '". $windowseat. "', '". $poweroutlet. "', '". $pc. "', '". $whiteboard. "', '". $maccomputers. "', '". $rockingchair. "', '". $silence. "', '". $image. "', '')";
 
 if($conn->query($sql) === TRUE){
-	echo "Success" . "<br>";
+	echo "Success".  "<br>";
 } else {
-	echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+	echo "Error: ". $sql . "<br>" . $conn->error . "<br>";
 }
 
 $conn->close();
