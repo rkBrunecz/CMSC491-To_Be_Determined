@@ -27,10 +27,7 @@
         </activity>
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".MainActivity" />
-        <activity
-            android:name=".ListOfSpots"
-            android:label="@string/title_activity_list_of_spots"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ListOfSpotsActivity" />
         <activity android:name=".PostActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
