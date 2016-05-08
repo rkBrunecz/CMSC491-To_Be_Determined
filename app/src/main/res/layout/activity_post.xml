@@ -105,13 +105,18 @@
             android:layout_alignParentStart="true"
             android:background="@drawable/round_edit_text"
             android:layout_marginTop="5dp"
-            android:hint="ENTER A SHORT DESCRIPTION..."
+            android:hint="ENTER A SHORT DESCRIPTION... (300 CHARACTERS)"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:textColor="#000000"
-            android:maxLength="300" />
+            android:maxLength="300"
+            android:scrollbars="vertical"
+            android:maxLines="10"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:nestedScrollingEnabled="false" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -143,7 +148,7 @@
             android:focusable="true"
             android:textColor="#feffffff"
             android:textSize="32dp"
-            android:layout_below="@+id/editText"
+            android:layout_below="@+id/descriptionHelper"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp" />
 
@@ -247,6 +252,18 @@
             android:layout_marginTop="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Characters Left: "
+            android:id="@+id/descriptionHelper"
+            android:layout_below="@+id/editText"
+            android:layout_alignRight="@+id/editText"
+            android:nestedScrollingEnabled="true"
+            android:layout_marginTop="3dp"
+            android:textColor="#000000"
+            android:textSize="14dp" />
 
     </RelativeLayout>
 </ScrollView>
