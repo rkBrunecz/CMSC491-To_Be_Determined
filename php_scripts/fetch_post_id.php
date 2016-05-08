@@ -24,8 +24,7 @@ if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
 	
 	echo $row["_id"]. "~". $row["username"]. "~". $row["location"]. "~". $row["floor"]. "~". $row["numseats"]. "~". $row["description"]. "~". $row["windowseat"]. "~".
-	$row["poweroutlet"]. "~". $row["pc"]. "~". $row["whiteboard"]. "~". $row["maccomputers"]. "~". $row["rockingchair"]. "~". $row["silence"]. "~". 
-	$row["image"]. "<br>"; 
+	$row["poweroutlet"]. "~". $row["pc"]. "~". $row["whiteboard"]. "~". $row["maccomputers"]. "~". $row["rockingchair"]. "~". $row["silence"]. "<br>"; 
 } 
 else
 {
