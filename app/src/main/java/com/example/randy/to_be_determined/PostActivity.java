@@ -2,11 +2,12 @@ package com.example.randy.to_be_determined;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,11 +29,23 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.Blob;
 
+/*
+ * PostActivity
+ *
+ * References:
+ * http://developer.android.com/reference/java/net/HttpURLConnection.html
+ * http://www.checkupdown.com/status/E414.html
+ * http://stackoverflow.com/questions/5379247/filenotfoundexception-while-getting-the-inputstream-object-from-httpurlconnectio
+ * https://www.simplifiedcoding.net/android-upload-image-to-server-using-php-mysql/
+ * http://sunil-android.blogspot.com/2013/10/insert-and-retrieve-image-into-db.html
+ */
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
-    /* PRIVATE VARIABLES */
+    /* PRIVATE CONSTANTS */
+    private static final int MAX_CHARACTERS = 300;
     private static final int CAMERA_REQUEST = 1888;
+
+    /* PRIVATE VARIABLES */
     private ImageView imageView;
     private Button photoButton;
     private Spinner floor,  location, numSeats;
@@ -46,7 +58,27 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                      "Sherman Hall", "Fine Arts", "Engineering", "Information Technology", "Performing Arts and Humanities"};
     private String flr[] = {"1st floor","2nd floor","3rd floor", "4th floor", "5th floor", "6th floor", "7th floor"};
     private ArrayAdapter<String> locarr, flrarr, seatsarr;
+    private TextView descriptionHelper;
     private  byte[] img = null;
+
+    /* Used to update the maximum number of characters in the descriptionHelper textview */
+    private TextWatcher desWatcher = new TextWatcher()
+    {
+        public void onTextChanged(CharSequence s, int start, int before, int count)
+        {
+
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after)
+        {
+
+        }
+
+        public void afterTextChanged(Editable s)
+        {
+            descriptionHelper.setText("Characters Left: " + (MAX_CHARACTERS - description.getText().length()));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +99,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         rockingChair = (CheckBox) findViewById(R.id.checkBox6);
         quiet = (CheckBox) findViewById(R.id.checkBox7);
         post = (Button) findViewById(R.id.button2);
+        descriptionHelper = (TextView) findViewById(R.id.descriptionHelper);
 
         locarr = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, loc);
@@ -84,6 +117,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.textView3), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.textView5), getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", (TextView) findViewById(R.id.textView7), getAssets());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", descriptionHelper, getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", window, getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", outlet, getAssets());
         CustomFont.setCustomFont("VitaCondensedStd-Regular.ttf", pc, getAssets());
@@ -105,6 +139,11 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         post.setOnClickListener(this);
         photoButton.setOnClickListener(this);
+
+        description.setMovementMethod(new ScrollingMovementMethod());
+        description.addTextChangedListener(desWatcher);
+
+        descriptionHelper.setText("Characters Left: " + MAX_CHARACTERS);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -16,6 +16,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/*
+ * MainActivity
+ *
+ * References:
+ * http://developer.android.com/reference/java/net/HttpURLConnection.html
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE VARIABLES */
     private Button postBtn, searchBtn, logOutBtn;
@@ -43,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CustomFont.setCustomFont("VitaStd-Bold.ttf", logOutBtn, getAssets());
         CustomFont.setCustomFont("VitaStd-Regular.ttf", userName, getAssets());
 
-        userName.setText(((SpotSwap)getApplication()).getUserName());
+        userName.setText(((SpotSwap) getApplication()).getUserName());
 
         postBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);

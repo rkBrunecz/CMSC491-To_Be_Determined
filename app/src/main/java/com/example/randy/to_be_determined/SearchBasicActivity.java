@@ -19,6 +19,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+/*
+ * SearchBasicActivity
+ *
+ * References:
+ * http://developer.android.com/reference/java/net/HttpURLConnection.html
+ */
 public class SearchBasicActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE CONSTANTS */
     private final int DELAY = 2500;

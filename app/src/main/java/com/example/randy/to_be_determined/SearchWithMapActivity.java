@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +34,7 @@ import java.net.URLEncoder;
  * on campus have spots available for the user to reserve.
  *
  * Resources:
+ * http://developer.android.com/reference/java/net/HttpURLConnection.html
  * http://www.mopri.de/2010/timertask-bad-do-it-the-android-way-use-a-handler/
  * https://developers.google.com/maps/documentation/android-api/marker#customize_a_marker
  * http://stackoverflow.com/questions/15925319/how-to-disable-android-map-marker-click-auto-center

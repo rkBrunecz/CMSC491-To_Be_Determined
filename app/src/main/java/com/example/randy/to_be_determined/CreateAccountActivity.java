@@ -22,6 +22,9 @@ import java.net.URL;
 
 /**
  * Created by Randy on 4/7/2016.
+ *
+ * References:
+ * http://developer.android.com/reference/java/net/HttpURLConnection.html
  */
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE VARIABLES */
