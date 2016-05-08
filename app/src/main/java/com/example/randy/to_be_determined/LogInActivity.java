@@ -23,6 +23,9 @@ import java.net.URL;
 
 /**
  * Created by Randy on 4/3/2016.
+ *
+ * References:
+ * http://developer.android.com/reference/java/net/HttpURLConnection.html
  */
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -98,6 +101,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.forgotPassword:
+                Intent forgotPassIntent = new Intent(this, ForgotPasswordActivity.class);
+                startActivity(forgotPassIntent);
 
                 break;
 
