@@ -39,6 +39,7 @@ import java.net.URLEncoder;
  * http://stackoverflow.com/questions/5379247/filenotfoundexception-while-getting-the-inputstream-object-from-httpurlconnectio
  * https://www.simplifiedcoding.net/android-upload-image-to-server-using-php-mysql/
  * http://sunil-android.blogspot.com/2013/10/insert-and-retrieve-image-into-db.html
+ * http://javatechig.com/android/android-textwatcher-example
  */
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
     /* PRIVATE CONSTANTS */
