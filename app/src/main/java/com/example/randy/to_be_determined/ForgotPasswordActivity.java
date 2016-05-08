@@ -22,6 +22,10 @@ import java.net.URL;
 
 /**
  * Created by Randy on 5/7/2016.
+ * ForgotPasswordActivity
+ *
+ * Unfortunately, the methods for getting a password for a user is very unsafe and easily manipulated to steal information from other users.
+ * Should be okay for demoing purposes.
  *
  * References:
  * http://developer.android.com/reference/java/net/HttpURLConnection.html
