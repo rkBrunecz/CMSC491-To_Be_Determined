@@ -20,17 +20,21 @@ public class ListOfSpotsActivity extends AppCompatActivity {
 
         // This needs to iterate for the number of rows in the table
         for (int i = 0; i < 10; i++) {
-            View spotLayout = addSpot(2, 5,0);
+            View spotLayout = addSpot(2, 5, 0, 0);
             layout.addView(spotLayout);
         }
     }
 
-    public View addSpot(int floor, int seats, int plug) {
+    public View addSpot(int floor, int seats, int naturallight, int plug) {
         LinearLayout spots = (LinearLayout) findViewById(R.id.spots);
 
-        // Set visibility of icons
+        // Set visibility of icons from spot_entry.xml template
+        // This does not work currently
+        if (naturallight == 0) {
+            spots.removeView(findViewById(R.id.textView5));
+        }
         if (plug == 0) {
-            spots.removeView(findViewById(R.id.imageView3));
+            spots.removeView(findViewById(R.id.imageView6));
         }
 
         View newSpot = LayoutInflater.from(this).inflate(R.layout.spot_entry, spots, false);

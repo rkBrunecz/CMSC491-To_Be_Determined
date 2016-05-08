@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#ffc313"
-    android:id="@+id/goodone">
+    android:id="@+id/spot_listing">
 
     <ImageView
         android:layout_width="94dp"
