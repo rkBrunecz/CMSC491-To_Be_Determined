@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class ListOfSpotsActivity extends AppCompatActivity {
+    LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +18,21 @@ public class ListOfSpotsActivity extends AppCompatActivity {
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.spots);
 
+        // This needs to iterate for the number of rows in the table
         for (int i = 0; i < 10; i++) {
-            View spotLayout = addSpot();
+            View spotLayout = addSpot(2, 5,0);
             layout.addView(spotLayout);
         }
     }
 
-    public View addSpot() {
+    public View addSpot(int floor, int seats, int plug) {
         LinearLayout spots = (LinearLayout) findViewById(R.id.spots);
+
+        // Set visibility of icons
+        if (plug == 0) {
+            spots.removeView(findViewById(R.id.imageView3));
+        }
+
         View newSpot = LayoutInflater.from(this).inflate(R.layout.spot_entry, spots, false);
 
         return newSpot;
