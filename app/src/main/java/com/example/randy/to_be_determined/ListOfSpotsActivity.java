@@ -1,13 +1,17 @@
 package com.example.randy.to_be_determined;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +27,19 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+/*
+ * ListOfSpotsActivity
+ *
+ * References:
+ * http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
+ * http://stackoverflow.com/questions/9685658/add-padding-on-view-programmatically
+ * http://stackoverflow.com/questions/16552811/set-a-margin-between-two-buttons-programmatically-from-a-linearlayout
+ */
 public class ListOfSpotsActivity extends AppCompatActivity{
+    /* PRIVATE CONSTANTS */
+    private final int MAX_IMG_HEIGHT = 100;
+    private final int MAX_IMG_WIDTH = 100;
+
     /* PRIVATE VARIABLES */
     private LinearLayout layout;
     private TextView locationName;
@@ -37,7 +53,7 @@ public class ListOfSpotsActivity extends AppCompatActivity{
         private LinearLayout mainHori, mainVert, subHori;
         private TextView tv;
 
-        public Spot(int id, String floor, String seat, boolean natlight, boolean plug, boolean pc, boolean silence, boolean whiteboard, boolean chair, boolean mac)
+        public Spot(int id, String floor, String seat, boolean natlight, boolean plug, boolean pc, boolean silence, boolean whiteboard, boolean chair, boolean mac, String image)
         {
             /* Initialize variables */
             this.id = id;
@@ -63,16 +79,51 @@ public class ListOfSpotsActivity extends AppCompatActivity{
             mainHori.setClickable(true);
             mainHori.setOnClickListener(viewClick);
 
+            /* Set additional parameters for the main container */
+            mainHori.setBackgroundResource(R.drawable.border);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMargins(0, 4, 0, 4);
+
+            /* Set borders around components */
+            mainHori.setLayoutParams(params);
 
             /* Set up text view */
             tv = new TextView(getApplicationContext());
-            tv.setText("FLOOR: " + this.floor + "\nSEATS AVAILABLE: " + numSeats);
+            tv.setText("FLOOR: " + this.floor + "\n# OF SEATS: " + numSeats);
             tv.setTextColor(Color.BLACK);
             tv.setTextSize(20);
+            setPadding(5, 0 ,0, 0, tv);
             CustomFont.setCustomFont("VitaStd-Regular.ttf", tv, getAssets());
 
+            Log.i("Image", image);
             /* Add views in the right order */
-            mainHori.addView(createImageView(R.mipmap.closebk48dp));
+            if(image.contains("null"))
+                mainHori.addView(createImageView(R.mipmap.closebk48dp));
+            else
+            {
+                /* Decode image and set up the image view */
+                byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+                Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                ImageView img = new ImageView(getApplicationContext());
+
+                float density = getApplicationContext().getResources().getDisplayMetrics().density;
+
+                img.setLayoutParams(new ViewGroup.LayoutParams((int)(MAX_IMG_WIDTH * density), (int)(MAX_IMG_HEIGHT * density)));
+                img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                img.setBackgroundResource(R.drawable.border);
+
+                img.setImageBitmap(decodedImage);
+
+                //Rotate image if it is on its side
+                if(decodedImage.getWidth() > decodedImage.getHeight())
+                    img.setRotation(90);
+
+                setPadding(10, 10, 10, 10, img);
+
+                mainHori.addView(img);
+            }
+
             mainHori.addView(mainVert);
             mainVert.addView(tv);
             mainVert.addView(subHori);
@@ -98,6 +149,15 @@ public class ListOfSpotsActivity extends AppCompatActivity{
         {
             ImageView v = new ImageView(getApplicationContext());
             v.setImageResource(resId);
+
+            if(resId == R.mipmap.closebk48dp)
+            {
+                float density = getApplicationContext().getResources().getDisplayMetrics().density;
+                v.setLayoutParams(new ViewGroup.LayoutParams((int)(MAX_IMG_WIDTH * density), (int)(MAX_IMG_HEIGHT * density)));
+                v.setScaleType(ImageView.ScaleType.CENTER);
+                v.setBackgroundResource(R.drawable.border);
+            }
+
             return v;
         }
 
@@ -109,7 +169,7 @@ public class ListOfSpotsActivity extends AppCompatActivity{
         private View.OnClickListener viewClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Replace with code to move the user to reserve intent */
+                /* Replace with code to move the user to reserve activity */
                 Toast.makeText(getApplicationContext(), "Clicked! " + id, Toast.LENGTH_SHORT).show();
             }
         };
@@ -121,6 +181,7 @@ public class ListOfSpotsActivity extends AppCompatActivity{
         setContentView(R.layout.activity_list_of_spots);
 
         layout = (LinearLayout) findViewById(R.id.spots);
+        setPadding(10, 10, 10, 10, layout);
 
         locationName = (TextView) findViewById(R.id.textView8);
 
@@ -136,6 +197,19 @@ public class ListOfSpotsActivity extends AppCompatActivity{
         locationName.setGravity(Gravity.CENTER_HORIZONTAL);
 
         new GetSpots().execute(((SpotSwap) getApplication()).getUserName(), s);
+    }
+
+    /*
+     * Sets the padding for elements with respect to the devices dimensions
+     */
+    private void setPadding(int left, int top, int right, int bottom, View v)
+    {
+        float density = getApplicationContext().getResources().getDisplayMetrics().density;
+
+        v.setPadding((int) (left * density),
+                (int) (top * density),
+                (int) (right * density),
+                (int) (bottom * density));
     }
 
     public class GetSpots extends AsyncTask<String, Void, String> {
@@ -158,9 +232,22 @@ public class ListOfSpotsActivity extends AppCompatActivity{
 
                 String line;
                 while((line = responseStreamReader.readLine()) != null) {
+                    String id = line.substring(0, line.indexOf("~"));
+
+                    url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_image_id.php?id=" + id);
+                    urlConnection = (HttpURLConnection)url.openConnection();
+                    in = new BufferedInputStream(urlConnection.getInputStream());
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                    line = line + "~";
+
+                    String image;
+                    while((image = reader.readLine()) != null)
+                        line += image;
+
+                    Log.i("Image", line);
                     strs.add(line);
                 }
-
 
                 urlConnection.disconnect();
             } catch(IOException e) {
@@ -177,9 +264,9 @@ public class ListOfSpotsActivity extends AppCompatActivity{
 
         protected void onPostExecute(String result)
         {
-            String[] post = new String[13];
+            String[] post = new String[14];
             int id;     //ID of table entry
-            String floor, numSeats;
+            String floor, numSeats, image;
 
             for(int i = 0; i < strs.size(); i++)
             {
@@ -211,7 +298,9 @@ public class ListOfSpotsActivity extends AppCompatActivity{
                 if(post[12].contains("TRUE"))
                     silence = true;
 
-                layout.addView(new Spot(id, floor, numSeats, natLight, plug, pc, silence, whiteboard, chair, mac).getSpot());
+                image = post[13];
+
+                layout.addView(new Spot(id, floor, numSeats, natLight, plug, pc, silence, whiteboard, chair, mac, image).getSpot());
             }
 
             loading.dismiss();
