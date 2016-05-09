@@ -1,28 +1,43 @@
 package com.example.randy.to_be_determined;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
 public class ListOfSpotsActivity extends AppCompatActivity{
-    LinearLayout layout;
+    /* PRIVATE VARIABLES */
+    private LinearLayout layout;
+    private TextView locationName;
 
     private class Spot
     {
         /* PRIVATE VARIABLES */
-        private int id, numSeats;     //ID of table entry
-        private String floor;
+        private int id;     //ID of table entry
+        private String floor, numSeats;
         private boolean natLight, plug, pc, silence, whiteboard, chair, mac;
         private LinearLayout mainHori, mainVert, subHori;
         private TextView tv;
 
-        public Spot(int id, String floor, int seat, boolean natlight, boolean plug, boolean pc, boolean silence, boolean whiteboard, boolean chair, boolean mac)
+        public Spot(int id, String floor, String seat, boolean natlight, boolean plug, boolean pc, boolean silence, boolean whiteboard, boolean chair, boolean mac)
         {
             /* Initialize variables */
             this.id = id;
@@ -54,6 +69,7 @@ public class ListOfSpotsActivity extends AppCompatActivity{
             tv.setText("FLOOR: " + this.floor + "\nSEATS AVAILABLE: " + numSeats);
             tv.setTextColor(Color.BLACK);
             tv.setTextSize(20);
+            CustomFont.setCustomFont("VitaStd-Regular.ttf", tv, getAssets());
 
             /* Add views in the right order */
             mainHori.addView(createImageView(R.mipmap.closebk48dp));
@@ -104,90 +120,101 @@ public class ListOfSpotsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_spots);
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.spots);
+        layout = (LinearLayout) findViewById(R.id.spots);
 
-        // This needs to iterate for the number of rows in the table
-        layout.addView(new Spot(1, "1st", 5, true, true, true, true, true, true, true).getSpot());
-        layout.addView(new Spot(2, "2nd", 1, true, false, false, false, false, true, true).getSpot());
-        layout.addView(new Spot(3, "4th", 5, false, true, false, true, true, true, true).getSpot());
-        layout.addView(new Spot(4, "1st", 3, true, true, true, false, true, false, true).getSpot());
-        layout.addView(new Spot(5, "3rd", 4, false, true, true, true, false, true, true).getSpot());
-        layout.addView(new Spot(6, "1st", 5, true, true, true, true, true, true, true).getSpot());
-        layout.addView(new Spot(7, "1st", 6, true, false, false, false, false, true, true).getSpot());
-        layout.addView(new Spot(8, "7th", 5, false, true, false, true, true, true, true).getSpot());
-        layout.addView(new Spot(9, "1st", 2, true, true, true, false, true, false, true).getSpot());
-        layout.addView(new Spot(10, "1st", 5, false, true, true, true, false, true, true).getSpot());
+        locationName = (TextView) findViewById(R.id.textView8);
+
+        String s = "EMPTY";
+
+        if(!getIntent().getStringExtra(SearchWithMapActivity.EXTRA_MESSAGE).isEmpty())
+            s = getIntent().getStringExtra(SearchWithMapActivity.EXTRA_MESSAGE);
+        else if(!getIntent().getStringExtra(SearchBasicActivity.EXTRA_MESSAGE).isEmpty())
+            s = getIntent().getStringExtra(SearchBasicActivity.EXTRA_MESSAGE);
+
+        locationName.setText(s.toUpperCase());
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", locationName, getAssets());
+        locationName.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        new GetSpots().execute(((SpotSwap) getApplication()).getUserName(), s);
     }
 
+    public class GetSpots extends AsyncTask<String, Void, String> {
+        ProgressDialog loading;
+        ArrayList<String> strs = new ArrayList<>();
 
-    public View addSpot(int floor, int seat, int natlight, int plug, int pc, int silence, int whiteboard, int chair, int mac) {
-        setContentView(R.layout.spot_entry);
-        LinearLayout spots = (LinearLayout) findViewById(R.id.spot_listing);
+        protected String doInBackground(String... user_creds)
+        {
+            /* LOCAL VARIABLES */
+            String s = "";
+            URL url;
 
-        // Set text to proper number of seats and floor
-        TextView tv = (TextView) findViewById(R.id.textView4);
-        tv.setText("FLOOR: " + String.valueOf(floor) + "\nSEATS AVAILABLE: " + String.valueOf(seat));
+            try {
+                url = new URL("http://mpss.csce.uark.edu/~palande1/fetch_post.php?username=" + user_creds[0] + "&location=" + URLEncoder.encode(user_creds[1], "UTF-8"));
+                HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-        // Set visibility of icons based on features available
-        if (natlight == 0) {
-            ImageView img = (ImageView) findViewById(R.id.imageView5);
-            img.setVisibility(View.INVISIBLE);
-        }
-        else{
-            ImageView img = (ImageView) findViewById(R.id.imageView5);
-            img.setVisibility(View.VISIBLE);
-        }
-        if (plug == 0) {
-            ImageView img = (ImageView) findViewById(R.id.imageView6);
-            img.setVisibility(View.INVISIBLE);
-        }
-        else{
-            ImageView img = (ImageView) findViewById(R.id.imageView6);
-            img.setVisibility(View.VISIBLE);
-        }
-        if (pc == 0) {
-            ImageView img = (ImageView) findViewById(R.id.imageView7);
-            img.setVisibility(View.INVISIBLE);
-        }
-        else{
-            ImageView img = (ImageView) findViewById(R.id.imageView7);
-            img.setVisibility(View.VISIBLE);
-        }
-        if (silence == 0) {
-            ImageView img = (ImageView) findViewById(R.id.imageView8);
-            img.setVisibility(View.INVISIBLE);
-        }
-        else{
-            ImageView img = (ImageView) findViewById(R.id.imageView8);
-            img.setVisibility(View.VISIBLE);
-        }
-        if (whiteboard == 0) {
-            ImageView img = (ImageView) findViewById(R.id.imageView9);
-            img.setVisibility(View.INVISIBLE);
-        }
-        else{
-            ImageView img = (ImageView) findViewById(R.id.imageView9);
-            img.setVisibility(View.VISIBLE);
-        }
-        if (chair == 0) {
-            ImageView img = (ImageView) findViewById(R.id.imageView4);
-            img.setVisibility(View.INVISIBLE);
-        }
-        else{
-            ImageView img = (ImageView) findViewById(R.id.imageView4);
-            img.setVisibility(View.VISIBLE);
-        }
-        if (mac == 0) {
-            ImageView img = (ImageView) findViewById(R.id.imageView3);
-            img.setVisibility(View.INVISIBLE);
-        }
-        else{
-            ImageView img = (ImageView) findViewById(R.id.imageView3);
-            img.setVisibility(View.VISIBLE);
+                s = responseStreamReader.readLine(); //Contains number of rows
+
+                String line;
+                while((line = responseStreamReader.readLine()) != null) {
+                    strs.add(line);
+                }
+
+
+                urlConnection.disconnect();
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+
+            return s;
         }
 
-        View newSpot = LayoutInflater.from(this).inflate(R.layout.spot_entry, spots, false);
+        protected void onPreExecute()
+        {
+            loading = ProgressDialog.show(ListOfSpotsActivity.this, "Retrieving Posts", "Retrieving posts...", true);
+        }
 
-        return newSpot;
+        protected void onPostExecute(String result)
+        {
+            String[] post = new String[13];
+            int id;     //ID of table entry
+            String floor, numSeats;
+
+            for(int i = 0; i < strs.size(); i++)
+            {
+                String line = strs.get(i);
+                boolean natLight = false, plug = false, pc = false, silence = false, whiteboard = false, chair = false, mac = false;
+
+                int j = 0;
+                for(String retVal: line.split("~"))
+                {
+                    post[j] = retVal;
+                    j++;
+                }
+
+                id = Integer.valueOf(post[0]);
+                floor = post[3];
+                numSeats = post[4];
+                if(post[6].contains("TRUE"))
+                    natLight = true;
+                if(post[7].contains("TRUE"))
+                    plug = true;
+                if(post[8].contains("TRUE"))
+                    pc = true;
+                if(post[9].contains("TRUE"))
+                    whiteboard = true;
+                if(post[10].contains("TRUE"))
+                    mac = true;
+                if(post[11].contains("TRUE"))
+                    chair = true;
+                if(post[12].contains("TRUE"))
+                    silence = true;
+
+                layout.addView(new Spot(id, floor, numSeats, natLight, plug, pc, silence, whiteboard, chair, mac).getSpot());
+            }
+
+            loading.dismiss();
+        }
     }
 }
