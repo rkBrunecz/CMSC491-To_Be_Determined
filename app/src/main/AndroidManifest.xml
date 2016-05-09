@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <user-permission android:name="android.permission.INTERNET" />
+    <user-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
 
     <application
         android:name=".SpotSwap"
@@ -27,11 +30,13 @@
         </activity>
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".ListOfSpotsActivity" >
+        <activity android:name=".ListOfSpotsActivity">
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity android:name=".PostActivity" />
@@ -54,7 +59,13 @@
             android:name=".SearchBasicActivity"
             android:label="@string/title_activity_search_basic"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ForgotPasswordActivity"></activity>
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".ChatAndReserveActivity"></activity>
+        <receiver android:name=".SMSReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

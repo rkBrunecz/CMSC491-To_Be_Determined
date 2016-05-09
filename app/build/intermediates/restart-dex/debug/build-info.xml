@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="armeabi-v7a,armeabi"
+    api-level="23"
+    density="xxhdpi"
+    format="7"
+    timestamp="81588058630995" >
+
+    <task
+        name="javac"
+        duration="8445" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="1952" />
+    <task
+        name="verifier"
+        duration="244" />
+
+    <artifact
+        location="C:\Users\bvenk\OneDrive\Documents\GitHub\McFinalProject\CMSC491-To_Be_Determined\app\build\outputs\apk\app-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="81588058630995" >
+        <artifact
+            location="C:\Users\bvenk\OneDrive\Documents\GitHub\McFinalProject\CMSC491-To_Be_Determined\app\build\outputs\apk\app-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>

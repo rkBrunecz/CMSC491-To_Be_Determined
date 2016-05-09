@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffc313">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="#ffc313"
+        android:nestedScrollingEnabled="false"
+        android:scrollIndicators="right">
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/enterEmailEdit"
+            android:hint="EX: me@umbc.edu"
+            android:fontFamily="@string/abc_search_hint"
+            android:editable="true"
+            android:background="@drawable/round_edit_text"
+            android:textSize="24dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_below="@+id/enterEmailTxt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:maxLength="30"
+            android:longClickable="false" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/enterUserEdit"
+            android:hint="ENTER USERNAME..."
+            android:fontFamily="@string/abc_search_hint"
+            android:editable="true"
+            android:background="@drawable/round_edit_text"
+            android:textSize="24dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_below="@+id/enterUsernameTxt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:maxLength="30" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/enterPassEdit"
+            android:hint="ENTER PASSWORD..."
+            android:fontFamily="@string/abc_search_hint"
+            android:editable="true"
+            android:background="@drawable/round_edit_text"
+            android:textSize="24dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_below="@+id/enterPassTxt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:maxLength="30" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/confirmPassEdit"
+            android:hint="CONFIRM PASSWORD..."
+            android:fontFamily="@string/abc_search_hint"
+            android:editable="true"
+            android:background="@drawable/round_edit_text"
+            android:textSize="24dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_below="@+id/confirmPassTxt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:maxLength="30" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENTER VALID UMBC EMAIL"
+            android:id="@+id/enterEmailTxt"
+            android:textColor="#000000"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textIsSelectable="false"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/spotSwapCreateAccount"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENTER PASSWORD\n(CASE SENSITIVE)"
+            android:id="@+id/enterPassTxt"
+            android:textColor="#000000"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textIsSelectable="false"
+            android:layout_below="@+id/enterPhoneNumberEdit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENTER USERNAME"
+            android:id="@+id/enterUsernameTxt"
+            android:textColor="#000000"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textIsSelectable="false"
+            android:layout_below="@+id/enterEmailEdit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONFIRM PASSWORD"
+            android:id="@+id/confirmPassTxt"
+            android:textColor="#000000"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textIsSelectable="false"
+            android:layout_below="@+id/enterPassEdit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            android:id="@+id/createAccountBtn"
+            android:background="@drawable/rounded_button_green"
+            android:textColor="#ffffff"
+            android:textSize="24dp"
+            android:clickable="false"
+            android:layout_below="@+id/confirmPassEdit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/cancelBtn"
+            android:background="@drawable/rounded_button_red"
+            android:textColor="#ffffff"
+            android:textSize="24dp"
+            android:clickable="false"
+            android:layout_below="@+id/createAccountBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/spotSwapCreateAccount"
+            android:text="SPOTSWAP"
+            android:textSize="60dp"
+            android:textColor="#000000"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENTER PHONE NUMBER"
+            android:id="@+id/enterPhoneNumberTxt"
+            android:layout_below="@+id/enterUserEdit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:textSize="24dp" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:inputType="phone"
+            android:ems="10"
+            android:background="@drawable/round_edit_text"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:id="@+id/enterPhoneNumberEdit"
+            android:layout_below="@+id/enterPhoneNumberTxt"
+            android:layout_centerHorizontal="true"
+            android:hint="Ex: 1234567890"
+            android:textSize="24dp"
+            android:textColor="#000000"
+            android:layout_marginTop="5dp"
+            android:maxLength="10" />
+
+    </RelativeLayout>
+</ScrollView>
