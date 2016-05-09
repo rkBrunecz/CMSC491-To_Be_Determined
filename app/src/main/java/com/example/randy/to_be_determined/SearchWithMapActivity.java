@@ -205,10 +205,12 @@ public class SearchWithMapActivity extends FragmentActivity implements OnMapRead
     @Override
     public void onInfoWindowClick(Marker m)
     {
-        /*
-        Intent selectSpotActivity = new Intent(this, ListOfSpots.class);
+        Intent selectSpotActivity = new Intent(this, ListOfSpotsActivity.class);
+        selectSpotActivity.setAction(Intent.ACTION_SEND);
         selectSpotActivity.putExtra(EXTRA_MESSAGE, m.getTitle().toString());
-        startActivity(selectSpotActivity);*/
+        selectSpotActivity.setType("text/plain");
+
+        startActivity(selectSpotActivity);
     }
 
     public class FindNumSpots extends AsyncTask<Void, Void, String> {

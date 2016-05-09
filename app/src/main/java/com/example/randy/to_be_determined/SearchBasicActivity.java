@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -34,26 +35,25 @@ public class SearchBasicActivity extends AppCompatActivity implements View.OnCli
     private Button searchMapBtn;
     private Handler handler = new Handler();
     private BuildingButton buttons [] = new BuildingButton[9];
-    //private Intent selectSpotActivity = new Intent(this, ListOfSpots.class);
+    private Intent selectSpotActivity;
 
     private class BuildingButton {
         private Button b;
         private TextView t;
         private String name;
 
-        public BuildingButton(Button b, TextView t, String name)
+        public BuildingButton(Button b, TextView t, String _name)
         {
             this.b = b;
-            this.name = name;
+            this.name = _name;
             this.t = t;
 
             b.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v)
                 {
-                    /*
                     selectSpotActivity.putExtra(EXTRA_MESSAGE, name);
-                    startActivity(selectSpotActivity);*/
+                    startActivity(selectSpotActivity);
                 }
             });
         }
@@ -96,8 +96,8 @@ public class SearchBasicActivity extends AppCompatActivity implements View.OnCli
             CustomFont.setCustomFont("VitaStd-Regular.ttf", buttons[i].t, getAssets());
         }
 
-
         searchMapBtn.setOnClickListener(this);
+        selectSpotActivity = new Intent(this, ListOfSpotsActivity.class);
     }
 
     @Override
