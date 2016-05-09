@@ -39,6 +39,7 @@
                 android:textColor="#ffffff"
                 android:id="@+id/userNameMain"
                 android:textSize="25dp"/>
+
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
