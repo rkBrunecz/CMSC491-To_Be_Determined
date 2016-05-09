@@ -35,6 +35,7 @@ import java.util.ArrayList;
  * http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
  * http://stackoverflow.com/questions/9685658/add-padding-on-view-programmatically
  * http://stackoverflow.com/questions/16552811/set-a-margin-between-two-buttons-programmatically-from-a-linearlayout
+ * http://www.androidhive.info/2015/05/android-swipe-down-to-refresh-listview-tutorial/
  */
 public class ListOfSpotsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     /* PRIVATE CONSTANTS */
