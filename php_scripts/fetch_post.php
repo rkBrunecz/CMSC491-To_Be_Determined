@@ -18,7 +18,8 @@ if($conn->connect_error)
 
 $sql = "SELECT *
 FROM Posts
-WHERE username!='". $user_name. "' and location='". $location. "' and reservedto=''";
+WHERE username!='". $user_name. "' and location='". $location. "' and reservedto=''
+ORDER BY time DESC";
 $result = $conn->query($sql);
 
 echo $result->num_rows. "\n";
