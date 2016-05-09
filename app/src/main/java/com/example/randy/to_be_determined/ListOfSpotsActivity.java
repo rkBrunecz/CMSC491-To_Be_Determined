@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -35,14 +36,16 @@ import java.util.ArrayList;
  * http://stackoverflow.com/questions/9685658/add-padding-on-view-programmatically
  * http://stackoverflow.com/questions/16552811/set-a-margin-between-two-buttons-programmatically-from-a-linearlayout
  */
-public class ListOfSpotsActivity extends AppCompatActivity{
+public class ListOfSpotsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     /* PRIVATE CONSTANTS */
     private final int MAX_IMG_HEIGHT = 100;
     private final int MAX_IMG_WIDTH = 100;
 
     /* PRIVATE VARIABLES */
     private LinearLayout layout;
+    private SwipeRefreshLayout refreshLayout;
     private TextView locationName;
+    private String locationNameStr;
 
     private class Spot
     {
@@ -180,23 +183,34 @@ public class ListOfSpotsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_spots);
 
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         layout = (LinearLayout) findViewById(R.id.spots);
         setPadding(10, 10, 10, 10, layout);
 
-        locationName = (TextView) findViewById(R.id.textView8);
-
-        String s = "EMPTY";
-
         if(!getIntent().getStringExtra(SearchWithMapActivity.EXTRA_MESSAGE).isEmpty())
-            s = getIntent().getStringExtra(SearchWithMapActivity.EXTRA_MESSAGE);
+            locationNameStr = getIntent().getStringExtra(SearchWithMapActivity.EXTRA_MESSAGE);
         else if(!getIntent().getStringExtra(SearchBasicActivity.EXTRA_MESSAGE).isEmpty())
-            s = getIntent().getStringExtra(SearchBasicActivity.EXTRA_MESSAGE);
+            locationNameStr = getIntent().getStringExtra(SearchBasicActivity.EXTRA_MESSAGE);
 
-        locationName.setText(s.toUpperCase());
-        CustomFont.setCustomFont("VitaStd-Regular.ttf", locationName, getAssets());
+        /* Set up location name text view */
+        locationName = (TextView) new TextView(getApplicationContext());
+        locationName.setText(locationNameStr.toUpperCase());
         locationName.setGravity(Gravity.CENTER_HORIZONTAL);
+        locationName.setTextSize(40);
+        locationName.setTextColor(Color.BLACK);
 
-        new GetSpots().execute(((SpotSwap) getApplication()).getUserName(), s);
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", locationName, getAssets());
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.setMargins(0, 20, 0, 20);
+        locationName.setLayoutParams(params);
+
+        layout.addView(locationName);
+
+        //Set up refresh listener
+        refreshLayout.setOnRefreshListener(this);
+
+        new GetSpots().execute(((SpotSwap) getApplication()).getUserName(), locationNameStr);
     }
 
     /*
@@ -210,6 +224,29 @@ public class ListOfSpotsActivity extends AppCompatActivity{
                 (int) (top * density),
                 (int) (right * density),
                 (int) (bottom * density));
+    }
+
+    public void onRefresh()
+    {
+        //Clear layout
+        layout.removeAllViews();
+
+        /* Set up location name text view */
+        locationName.setText(locationNameStr.toUpperCase());
+        locationName.setGravity(Gravity.CENTER_HORIZONTAL);
+        locationName.setTextSize(40);
+        locationName.setTextColor(Color.BLACK);
+
+        CustomFont.setCustomFont("VitaStd-Regular.ttf", locationName, getAssets());
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.setMargins(0, 20, 0, 20);
+        locationName.setLayoutParams(params);
+
+        layout.addView(locationName);
+
+        //Update layout
+        new GetSpots().execute(((SpotSwap) getApplication()).getUserName(), locationName.getText().toString());
     }
 
     public class GetSpots extends AsyncTask<String, Void, String> {
@@ -303,6 +340,7 @@ public class ListOfSpotsActivity extends AppCompatActivity{
                 layout.addView(new Spot(id, floor, numSeats, natLight, plug, pc, silence, whiteboard, chair, mac, image).getSpot());
             }
 
+            refreshLayout.setRefreshing(false);
             loading.dismiss();
         }
     }
