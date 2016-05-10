@@ -94,7 +94,7 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
 
 
 
-        new CountDownTimer(600000, 1000) { // adjust the milli seconds here
+        new CountDownTimer(60000, 1000) { // adjust the milli seconds here
 
             public void onTick(long millisUntilFinished) {
 
