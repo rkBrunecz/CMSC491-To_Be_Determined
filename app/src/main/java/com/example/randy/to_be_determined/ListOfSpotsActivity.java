@@ -176,12 +176,9 @@ public class ListOfSpotsActivity extends AppCompatActivity implements SwipeRefre
             @Override
             public void onClick(View v) {
                 /* Replace with code to move the user to reserve activity */
-                Toast.makeText(getApplicationContext(), "Clicked! " + id, Toast.LENGTH_SHORT).show();
                 Intent chatIntent = new Intent(ListOfSpotsActivity.this,ChatAndReserveActivity.class);
                 chatIntent.putExtra(ID_MESSAGE,id);
                 ListOfSpotsActivity.this.startActivity(chatIntent);
-                Toast.makeText(getApplicationContext(),"To chat page",Toast.LENGTH_SHORT).show();
-
             }
         };
     }

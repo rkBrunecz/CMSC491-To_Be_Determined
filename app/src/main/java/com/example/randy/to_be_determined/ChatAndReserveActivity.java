@@ -70,7 +70,6 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
         text2=(TextView) findViewById(R.id.textView2);
         text2.setMovementMethod(new ScrollingMovementMethod());
 
-
         chat = (EditText) findViewById(R.id.editText);
         send=(Button) findViewById(R.id.buttonSend);
         reserve =(Button) findViewById(R.id.buttonReserve);
@@ -80,7 +79,6 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
         Intent intent = getIntent();                    //receiving the received message
         String message = intent.getStringExtra(recv);
         id= intent.getIntExtra(ListOfSpotsActivity.ID_MESSAGE,0);
-        Toast.makeText(ChatAndReserveActivity.this,"received id: "+ id,Toast.LENGTH_SHORT).show();
         new GetNum().execute(id);
 
         if (message != null)
@@ -91,8 +89,6 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
             text2.setTextColor(Color.RED);
 
         }
-
-
 
         new CountDownTimer(60000, 1000) { // adjust the milli seconds here
 
