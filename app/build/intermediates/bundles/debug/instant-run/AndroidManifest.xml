@@ -14,11 +14,10 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <user-permission android:name="android.permission.INTERNET" />
-
-    <!-- Include required permissions for Google Mobile Ads to run -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
@@ -76,6 +75,15 @@
             android:label="@string/title_activity_search_basic"
             android:theme="@style/AppTheme" />
         <activity android:name="com.example.randy.to_be_determined.ForgotPasswordActivity" />
+        <activity android:name="com.example.randy.to_be_determined.ChatAndReserveActivity" />
+
+        <receiver android:name="com.example.randy.to_be_determined.SMSReceiver" >
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name="com.example.randy.to_be_determined.FinalizeRequest" />
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

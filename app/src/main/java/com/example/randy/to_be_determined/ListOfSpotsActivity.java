@@ -1,6 +1,7 @@
 package com.example.randy.to_be_determined;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -41,6 +42,7 @@ public class ListOfSpotsActivity extends AppCompatActivity implements SwipeRefre
     /* PRIVATE CONSTANTS */
     private final int MAX_IMG_HEIGHT = 100;
     private final int MAX_IMG_WIDTH = 100;
+    public final static String ID_MESSAGE="com.example.randy.to_be_determined.ID_MSG";
 
     /* PRIVATE VARIABLES */
     private LinearLayout layout;
@@ -175,6 +177,11 @@ public class ListOfSpotsActivity extends AppCompatActivity implements SwipeRefre
             public void onClick(View v) {
                 /* Replace with code to move the user to reserve activity */
                 Toast.makeText(getApplicationContext(), "Clicked! " + id, Toast.LENGTH_SHORT).show();
+                Intent chatIntent = new Intent(ListOfSpotsActivity.this,ChatAndReserveActivity.class);
+                chatIntent.putExtra(ID_MESSAGE,id);
+                ListOfSpotsActivity.this.startActivity(chatIntent);
+                Toast.makeText(getApplicationContext(),"To chat page",Toast.LENGTH_SHORT).show();
+
             }
         };
     }

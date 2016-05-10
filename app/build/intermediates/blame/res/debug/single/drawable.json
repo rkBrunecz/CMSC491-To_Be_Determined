@@ -8,20 +8,20 @@
         "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\src\\main\\res\\drawable\\border.xml"
     },
     {
-        "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
-        "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
-    },
-    {
         "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_button_red.xml",
         "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\src\\main\\res\\drawable\\rounded_button_red.xml"
     },
     {
-        "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
-        "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable\\abc_btn_radio_material.xml"
+        "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
+        "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
     },
     {
         "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\cast_ic_notification_connecting.xml",
         "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast\\8.4.0\\res\\drawable\\cast_ic_notification_connecting.xml"
+    },
+    {
+        "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable\\abc_btn_radio_material.xml"
     },
     {
         "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_spinner.xml",
@@ -128,12 +128,12 @@
         "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_google_signin_btn_icon_light.xml"
     },
     {
-        "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_button_green_action.xml",
-        "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\src\\main\\res\\drawable\\rounded_button_green_action.xml"
-    },
-    {
         "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_pause_light.xml",
         "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_pause_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_button_green_action.xml",
+        "source": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\src\\main\\res\\drawable\\rounded_button_green_action.xml"
     },
     {
         "merged": "C:\\Users\\bvenk\\OneDrive\\Documents\\GitHub\\McFinalProject\\CMSC491-To_Be_Determined\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_cast_light.xml",
