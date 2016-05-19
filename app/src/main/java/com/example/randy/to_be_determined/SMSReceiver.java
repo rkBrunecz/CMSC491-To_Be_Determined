@@ -16,12 +16,22 @@ public class SMSReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle myBundle = intent.getExtras();
         SmsMessage[] messages = null;
+        SmsMessage msg = null;
         String strMessage = "";
+        String currentPhone="";
+        String compareNum = "";
 
         if (myBundle != null) {
             Object[] pdus = (Object[]) myBundle.get("pdus");
 
+            for (int i = 0 ; i<pdus.length;i++){
+                msg = SmsMessage.createFromPdu((byte[])pdus[i]);
+                currentPhone = msg.getDisplayOriginatingAddress();//for finding the phone number from whom we got message
+            }
+
             messages = new SmsMessage[pdus.length];
+            //currentPhone = messages[0].getDisplayOriginatingAddress();
+            Log.v("senders number",currentPhone);
 
             for (int i = 0; i < messages.length; i++) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -38,7 +48,17 @@ public class SMSReceiver extends BroadcastReceiver {
 
             Log.e("SMS", strMessage);
             ChatAndReserveActivity m = new ChatAndReserveActivity();
-            m.receiveText(strMessage);
+            compareNum = MsgSenderNum.getPhoneNum();
+            String s = "+1"+compareNum;
+            Log.v("s : ",s);
+            Log.v("current num",currentPhone);
+
+            if (s.equals(currentPhone)){//checking the phone number from where message is received
+                m.receiveText(strMessage);//sending the received message to chat box
+
+            }
+
+
         }
 
     }

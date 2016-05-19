@@ -17,7 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            resValue "string", "google_maps_api_key", "AIzaSyDQ9u-kjBsuuOI_ytx-eiqv0d8gW-kKUpg"
+            resValue "string", "google_maps_api_key", "AIzaSyBektw0BYfsGt5fB4k4a2zVEoyCz8HeZiI"
         }
     }
 }

@@ -28,6 +28,8 @@ public class FinalizeRequest extends AppCompatActivity {
 
     }
 
+    //for deleting the post after reserving the spot
+
     public class GetNum extends AsyncTask<Integer, Void, Integer> {
 
         @Override
@@ -56,6 +58,8 @@ public class FinalizeRequest extends AppCompatActivity {
             return 0;
 
         }
+
+        //navigating to the main menu after posting
 
         @Override
         protected void onPostExecute(Integer integer) {

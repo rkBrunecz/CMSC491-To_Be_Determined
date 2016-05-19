@@ -40,6 +40,9 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
     EditText chat;
     Button send, reserve;
     int seconds , minutes;
+    MsgSenderNum sendNum=new MsgSenderNum();
+
+    //for the timer feature
 
     public String formatTime(long millis) {
         String output = "00:00";
@@ -135,7 +138,7 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
 
         switch (v.getId())
         {
-            case R.id.buttonSend : String chatTextget=chat.getText().toString();
+            case R.id.buttonSend : String chatTextget=chat.getText().toString();//sending the message to the person
 
                 String  chatTextset=chatTextget+"\n";
                 text2.append("Me : "+chatTextset);
@@ -143,12 +146,10 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
                 chat.setText("");
                 sendSMS(chatTextget);
                 break;
-            case R.id.buttonReserve :
+            case R.id.buttonReserve :               //for reserving the spot
                 Intent finalizeIntent = new Intent(ChatAndReserveActivity.this,FinalizeRequest.class);
                 finalizeIntent.putExtra(ListOfSpotsActivity.ID_MESSAGE,id);
                 ChatAndReserveActivity.this.startActivity(finalizeIntent);
-
-                //deleteFromList(id);
                 Toast.makeText(ChatAndReserveActivity.this, "Finalizing Spot", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -157,26 +158,8 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
 
     }
 
-    public void deleteFromList(Integer id_){
-        String s="";
-        URL url;
-        try{
-            url=new URL("http://mpss.csce.uark.edu/~palande1/after_reserve.php?id="+id_);
-            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
 
-            s = responseStreamReader.readLine();
-            Log.i("Response for reserve", s);
-
-            urlConnection.disconnect();
-        }catch (Exception e){
-
-            e.printStackTrace();
-
-        }
-
-    }
+    //for receiving the message
 
     public void receiveText(String msg){
         Log.e("Messsage received: ", msg);
@@ -197,6 +180,8 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
         super.onPause();
     }
 
+    //for getting the phone no. of the person who posted the post in app in order to communicate with him
+
     public class GetNum extends AsyncTask<Integer, Void, Integer>{
 
         @Override
@@ -215,6 +200,7 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
                     s = responseStreamReader.readLine();
                     Log.i("Response for phonenum", s);
                     phoneNumberSend="+1"+s;
+                    sendNum.setPhoneNum(s);
                     urlConnection.disconnect();
                 }catch (Exception e){
 
@@ -224,17 +210,7 @@ public class ChatAndReserveActivity extends AppCompatActivity implements View.On
 
             } else {
 
-
-
-
-
-
-
             }
-
-
-
-
             return 0;
         }
     }
