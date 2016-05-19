@@ -164,7 +164,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
                 if(validAccount) {
                     Toast.makeText(getApplicationContext(), "Creating account...", Toast.LENGTH_SHORT).show();
 
-                    new CheckUserCreditials().execute(userNameEdit.getText().toString(), emailEdit.getText().toString(), phoneNumberEdit.getText().toString());
+                    new CheckUserCredentials().execute(userNameEdit.getText().toString(), emailEdit.getText().toString(), phoneNumberEdit.getText().toString());
                 }
 
                 break;
@@ -176,7 +176,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    public class CheckUserCreditials extends AsyncTask<String, Void, String> {
+    public class CheckUserCredentials extends AsyncTask<String, Void, String> {
        ProgressDialog loading;
 
         protected String doInBackground(String... user_creds)
