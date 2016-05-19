@@ -28,6 +28,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+/**
+ * ChatAndReserveActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This activity allows a user to chat with other user who posted the spot and if he is satisfied with the spot specifications
+ * then he can reserve it by clicking the reserve button.
+ *
+ * References:
+ * http://developer.android.com/reference/java/net/HttpURLConnection.html
+ */
 public class ChatAndReserveActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String ACTION_SMS_SENT = "com.techblogon.android.apis.os.SMS_SENT_ACTION";

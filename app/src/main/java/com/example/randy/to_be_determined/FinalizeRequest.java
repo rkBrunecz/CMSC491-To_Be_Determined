@@ -13,6 +13,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * FinalizeRequest
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This activity will finalize the spot and deletes its entry from the database and then it will navigate to main activity
+ * page
+ *
+ * References:
+ * http://developer.android.com/reference/java/net/HttpURLConnection.html
+ */
+
 public class FinalizeRequest extends AppCompatActivity {
 
     Integer id=0;

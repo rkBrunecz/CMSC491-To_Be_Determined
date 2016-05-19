@@ -9,7 +9,15 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 /**
- * Created by bvenk on 5/9/2016.
+ * CreateAcountActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This class is used to receive messages from broadcast receiver and also checks whether the message received, came from the
+ * user who posted the spot or not.
+ * If the message is from the user who posted the spot then this message will be sent to the chat page of the person who is
+ * currently reserving the spot.
+ *
+ *
  */
 public class SMSReceiver extends BroadcastReceiver {
     @Override
