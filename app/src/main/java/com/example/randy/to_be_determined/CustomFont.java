@@ -7,7 +7,11 @@ import android.widget.TextView;
 import android.widget.CheckBox;
 
 /**
- * Created by Randy on 4/23/2016.
+ * CustomFont
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This class uses a number of static classes that expedite the process of adding a custom
+ * font to various UI elements.
  */
 public class CustomFont {
     public static void setCustomFont(String fontName, TextView txt, AssetManager am)

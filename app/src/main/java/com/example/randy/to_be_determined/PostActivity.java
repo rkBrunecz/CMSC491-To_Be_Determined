@@ -30,8 +30,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-/*
+/**
  * PostActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This activity allows a user to post a new study spot to the database. The user can select
+ * a building; a particular floor in the building; the number of seats available; a short
+ * description; and add a photo. Additionally, a poster can list the features that a particular
+ * spot hosts, such as power outlets, a pc, a mac, a window nearby, comfy chairs, a whiteboard,
+ * and whether or not the spot is a quiet space.
  *
  * References:
  * http://developer.android.com/reference/java/net/HttpURLConnection.html

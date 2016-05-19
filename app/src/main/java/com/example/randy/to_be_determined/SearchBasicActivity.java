@@ -20,8 +20,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-/*
+/**
  * SearchBasicActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This activity allows a user to see how many spots are available in each building by checking
+ * the database periodically. This uses a grid like structure where each button contains the number
+ * of spots in the building it is associated with. The name of the building is written above each
+ * button so that the user knows which button is associated with which building.
  *
  * References:
  * http://developer.android.com/reference/java/net/HttpURLConnection.html

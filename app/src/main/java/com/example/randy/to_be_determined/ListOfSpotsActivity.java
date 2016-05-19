@@ -29,8 +29,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-/*
+/**
  * ListOfSpotsActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This activity checks the database for posts in a particular building and then displays them,
+ * ordering them by which were most recently posted.
  *
  * References:
  * http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview

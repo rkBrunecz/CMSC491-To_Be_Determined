@@ -16,8 +16,13 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/*
+/**
  * MainActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This activity simply allows a user to navigate between searching for a study spot on campus,
+ * or posting one. Additionally, this page is where the user can log out when they are finished
+ * with the application.
  *
  * References:
  * http://developer.android.com/reference/java/net/HttpURLConnection.html

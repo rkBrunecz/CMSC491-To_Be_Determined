@@ -22,7 +22,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Randy on 4/3/2016.
+ * LogInActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This class allows a user to log into the spot swap application. It takes a username and
+ * password as input, and then checks the database for a match. If the user attempts to log
+ * in more than 3 times and fails, the application will lock the user out from logging in.
  *
  * References:
  * http://developer.android.com/reference/java/net/HttpURLConnection.html

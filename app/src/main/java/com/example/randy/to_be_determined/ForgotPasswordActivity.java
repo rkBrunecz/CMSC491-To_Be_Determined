@@ -21,11 +21,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Randy on 5/7/2016.
  * ForgotPasswordActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
  *
- * Unfortunately, the methods for getting a password for a user is very unsafe and easily manipulated to steal information from other users.
- * Should be okay for demoing purposes.
+ * This activity returns a users password when the user gives an username and email address
+ * associated with an account in the user database. Unfortunately, this system is not very safe.
+ * However, in a future update to this class, we would like to send a user an email containing
+ * their password.
  *
  * References:
  * http://developer.android.com/reference/java/net/HttpURLConnection.html

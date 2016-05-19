@@ -21,7 +21,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Randy on 4/7/2016.
+ * CreateAcountActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
+ * This activity allows a user to create and account with the spot swap application. It contains
+ * some error checking and makes sure the user does attempt to use the same phone number, user
+ * name, or email address as another registered user.
  *
  * References:
  * http://developer.android.com/reference/java/net/HttpURLConnection.html

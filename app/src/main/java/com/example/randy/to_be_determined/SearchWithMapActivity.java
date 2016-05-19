@@ -30,8 +30,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 /**
+ * SearchWithMapActivity
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
+ *
  * This class displays a map activity that updates dynamically with markers to show which buildings
- * on campus have spots available for the user to reserve.
+ * on campus have spots available for the user to reserve. This done by checking the database periodically
+ * for spots posted in each building.
  *
  * Resources:
  * http://developer.android.com/reference/java/net/HttpURLConnection.html

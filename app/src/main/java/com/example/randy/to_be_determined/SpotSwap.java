@@ -3,7 +3,8 @@ package com.example.randy.to_be_determined;
 import android.app.Application;
 
 /**
- * Created by Randy on 5/2/2016.
+ * SpotSwap
+ * Developers: Randy Brunecz, Jessica Rolfe, Venkat Rami Reddy, Rajuta Parlance
  *
  * This class is designed to share certain information across multiple activities such as a
  * Users account name.
