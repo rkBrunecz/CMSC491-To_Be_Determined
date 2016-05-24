@@ -2,9 +2,9 @@
 <p align="center">
   <img src="https://github.com/rkBrunecz/CMSC491-To_Be_Determined/blob/master/app/src/main/res/mipmap-xxxhdpi/spot_swap_launcher.png" alt="SpotSwap Logo" height=192 width=192/>
 </p>                                                                                   
-*Developers:   Rajuta Parlance, Venkat Rami Reddy, Jessica Rolfe, Randy Brunecz*           
+*Developers:   Rajuta Parlance, Venkat Rami Reddy, Jessica Rolfe, Randall Brunecz*           
 *UI Designers: Nick Desaulniers, Sandy Nguyen*             
-*Last Updated: 4/23/2016*
+*Last Updated: 5/24/2016*
  
 This app allows users to find study spots  and reserve them on campus. Users can post study spots and then sell them to other users who reserve the space. 
                            
