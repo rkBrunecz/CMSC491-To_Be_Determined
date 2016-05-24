@@ -41,7 +41,6 @@ import java.net.URLEncoder;
  * http://developer.android.com/reference/java/net/HttpURLConnection.html
  * http://www.mopri.de/2010/timertask-bad-do-it-the-android-way-use-a-handler/
  * https://developers.google.com/maps/documentation/android-api/marker#customize_a_marker
- * http://stackoverflow.com/questions/15925319/how-to-disable-android-map-marker-click-auto-center
  * https://developers.google.com/maps/documentation/android-api/infowindows#custom_info_windows
  */
 public class SearchWithMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener, View.OnClickListener {
